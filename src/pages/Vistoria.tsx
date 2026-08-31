@@ -350,41 +350,56 @@ export default function VistoriaPage() {
     setSelectedHospitalId(hospitalId)
   }
 
-  // Helper badge component for item situation (CREA-PI official palette: Blue/Gold/Gray/Red)
-  const renderSituacaoBadge = (situacao: SituacaoChecklist) => {
+  // Helper badge component for item situation (CREA-PI official palette: Green Conforme, Red Pendente/Vencido, Gray Não se aplica)
+  const renderSituacaoBadge = (situacao: SituacaoChecklist, size: 'sm' | 'default' = 'default') => {
+    const isSm = size === 'sm'
     switch (situacao) {
       case 'conforme':
         return (
-          <Badge className="bg-[#E8F1F8] text-[#004B8D] hover:bg-[#E8F1F8] border border-[#004B8D]/30 font-bold text-xs px-2.5 py-0.5 gap-1 shrink-0">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#004B8D]" />
+          <Badge
+            className={`bg-emerald-50 text-emerald-800 hover:bg-emerald-50 border border-emerald-300 font-bold ${isSm ? 'text-[11px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} gap-1 shrink-0 shadow-xs`}
+          >
+            <CheckCircle2
+              className={isSm ? 'w-3 h-3 text-emerald-600' : 'w-3.5 h-3.5 text-emerald-600'}
+            />
             Conforme
           </Badge>
         )
       case 'pendente':
         return (
-          <Badge className="bg-amber-50 text-[#8C6200] hover:bg-amber-50 border border-[#E5A812]/50 font-bold text-xs px-2.5 py-0.5 gap-1 shrink-0">
-            <AlertTriangle className="w-3.5 h-3.5 text-[#C88F06]" />
+          <Badge
+            className={`bg-rose-50 text-rose-800 hover:bg-rose-50 border border-rose-300 font-bold ${isSm ? 'text-[11px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} gap-1 shrink-0 shadow-xs`}
+          >
+            <AlertTriangle
+              className={isSm ? 'w-3 h-3 text-rose-600' : 'w-3.5 h-3.5 text-rose-600'}
+            />
             Pendente
           </Badge>
         )
       case 'vencido':
         return (
-          <Badge className="bg-red-50 text-red-700 hover:bg-red-50 border border-red-300 font-bold text-xs px-2.5 py-0.5 gap-1 shrink-0">
-            <Clock className="w-3.5 h-3.5 text-red-600" />
+          <Badge
+            className={`bg-rose-50 text-rose-800 hover:bg-rose-50 border border-rose-300 font-bold ${isSm ? 'text-[11px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} gap-1 shrink-0 shadow-xs`}
+          >
+            <Clock className={isSm ? 'w-3 h-3 text-rose-600' : 'w-3.5 h-3.5 text-rose-600'} />
             Vencido
           </Badge>
         )
       case 'não se aplica':
         return (
-          <Badge className="bg-[#F4F6F9] text-[#486581] hover:bg-[#F4F6F9] border border-[#D3DFE9] font-medium text-xs px-2.5 py-0.5 gap-1 shrink-0">
-            <XCircle className="w-3.5 h-3.5 text-[#829AB1]" />
+          <Badge
+            className={`bg-[#F4F6F9] text-[#486581] hover:bg-[#F4F6F9] border border-[#D3DFE9] font-medium ${isSm ? 'text-[11px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} gap-1 shrink-0`}
+          >
+            <XCircle className={isSm ? 'w-3 h-3 text-[#829AB1]' : 'w-3.5 h-3.5 text-[#829AB1]'} />
             Não se aplica
           </Badge>
         )
       default:
         return (
-          <Badge className="bg-[#F4F6F9] text-[#829AB1] hover:bg-[#F4F6F9] border border-[#D3DFE9] font-medium text-xs px-2.5 py-0.5 gap-1 shrink-0">
-            <HelpCircle className="w-3.5 h-3.5" />
+          <Badge
+            className={`bg-[#F4F6F9] text-[#829AB1] hover:bg-[#F4F6F9] border border-[#D3DFE9] font-medium ${isSm ? 'text-[11px] px-2 py-0.5' : 'text-xs px-2.5 py-1'} gap-1 shrink-0`}
+          >
+            <HelpCircle className={isSm ? 'w-3 h-3' : 'w-3.5 h-3.5'} />
             Não avaliado
           </Badge>
         )
@@ -692,11 +707,11 @@ export default function VistoriaPage() {
                   <AccordionItem
                     key={categoria.id}
                     value={categoria.id}
-                    className="border border-[#D3DFE9] bg-white rounded-xl px-4 sm:px-6 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all overflow-hidden"
+                    className="border border-[#D3DFE9] bg-white rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all overflow-hidden"
                   >
-                    <AccordionTrigger className="py-4 hover:no-underline flex items-center justify-between gap-3 text-left">
+                    <AccordionTrigger className="px-5 py-4 hover:no-underline flex items-center justify-between gap-3 text-left hover:bg-[#F8FAFC]">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 flex-1 pr-2">
-                        <div className="space-y-0.5">
+                        <div className="space-y-1">
                           <div className="flex items-center gap-2">
                             <span className="font-bold text-[15px] sm:text-base text-[#102A43]">
                               {categoria.nome}
@@ -704,22 +719,22 @@ export default function VistoriaPage() {
                           </div>
                           <div className="flex flex-wrap items-center gap-2 text-xs text-[#486581]">
                             {categoria.exigeArt ? (
-                              <span className="text-[#004B8D] font-bold bg-[#E8F1F8] px-2 py-0.5 rounded">
+                              <span className="text-[#004B8D] font-bold bg-[#E8F1F8] px-2 py-0.5 rounded text-[11px]">
                                 Exige ART
                               </span>
                             ) : (
-                              <span className="text-[#486581] bg-[#F4F6F9] px-2 py-0.5 rounded">
+                              <span className="text-[#486581] bg-[#F4F6F9] px-2 py-0.5 rounded text-[11px]">
                                 ART não exigida
                               </span>
                             )}
 
                             {categoria.periodicidadeDias && categoria.periodicidadeDias > 0 ? (
-                              <span className="flex items-center gap-1 text-[#486581] bg-[#F4F6F9] px-2 py-0.5 rounded">
+                              <span className="flex items-center gap-1 text-[#486581] bg-[#F4F6F9] px-2 py-0.5 rounded text-[11px]">
                                 <Calendar className="w-3 h-3 text-[#004B8D]" />
                                 Periodicidade: {categoria.periodicidadeDias} dias
                               </span>
                             ) : (
-                              <span className="text-[#829AB1] bg-[#F4F6F9] px-2 py-0.5 rounded">
+                              <span className="text-[#829AB1] bg-[#F4F6F9] px-2 py-0.5 rounded text-[11px]">
                                 Sem periodicidade fixa
                               </span>
                             )}
@@ -733,219 +748,289 @@ export default function VistoriaPage() {
                       </div>
                     </AccordionTrigger>
 
-                    <AccordionContent className="pt-2 pb-5 border-t border-[#D3DFE9]/80">
-                      <div className="space-y-5 pt-3">
-                        {/* 1. Pergunta Principal: Hospital possui este sistema/serviço? */}
-                        <div className="bg-[#F4F6F9] p-4 rounded-xl border border-[#D3DFE9]">
-                          <Label className="text-sm font-bold text-[#102A43] block mb-2.5">
-                            O hospital possui este sistema / serviço?{' '}
-                            <span className="text-red-500">*</span>
-                          </Label>
-                          <RadioGroup
-                            value={itemState.possuiSistema || ''}
-                            onValueChange={(val) =>
-                              handleFieldChange(categoria.id, {
-                                possuiSistema: val as 'Sim' | 'Não',
-                              })
-                            }
-                            className="flex items-center gap-6"
-                          >
-                            <div className="flex items-center space-x-2 cursor-pointer">
-                              <RadioGroupItem
-                                value="Sim"
-                                id={`possui-sim-${categoria.id}`}
-                                className="border-[#004B8D] text-[#004B8D]"
-                              />
-                              <Label
-                                htmlFor={`possui-sim-${categoria.id}`}
-                                className="text-sm font-semibold text-[#102A43] cursor-pointer"
-                              >
-                                Sim
+                    <AccordionContent className="pt-0 pb-0 border-t border-[#D3DFE9]/80">
+                      <div className="p-5 sm:p-6 space-y-6 bg-slate-50/50">
+                        {/* 1. Pergunta Principal / Header: Possui o sistema/serviço? */}
+                        <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#D3DFE9] shadow-xs">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div>
+                              <Label className="text-sm font-bold text-[#102A43] block">
+                                O hospital possui este sistema / serviço?{' '}
+                                <span className="text-rose-600">*</span>
                               </Label>
+                              <p className="text-xs text-[#486581] mt-0.5">
+                                Selecione &quot;Sim&quot; para detalhar prestador, ART e
+                                comprovantes, ou &quot;Não&quot; para registrar como Não se aplica.
+                              </p>
                             </div>
-                            <div className="flex items-center space-x-2 cursor-pointer">
-                              <RadioGroupItem
-                                value="Não"
-                                id={`possui-nao-${categoria.id}`}
-                                className="border-[#004B8D] text-[#004B8D]"
-                              />
-                              <Label
-                                htmlFor={`possui-nao-${categoria.id}`}
-                                className="text-sm font-semibold text-[#102A43] cursor-pointer"
-                              >
-                                Não (Não se aplica)
-                              </Label>
-                            </div>
-                          </RadioGroup>
+
+                            <RadioGroup
+                              value={itemState.possuiSistema || ''}
+                              onValueChange={(val) =>
+                                handleFieldChange(categoria.id, {
+                                  possuiSistema: val as 'Sim' | 'Não',
+                                })
+                              }
+                              className="flex items-center gap-5 shrink-0 pt-1 sm:pt-0"
+                            >
+                              <div className="flex items-center space-x-2 cursor-pointer bg-[#F4F6F9] hover:bg-[#E8F1F8] px-3 py-1.5 rounded-lg border border-[#D3DFE9] transition-colors">
+                                <RadioGroupItem
+                                  value="Sim"
+                                  id={`possui-sim-${categoria.id}`}
+                                  className="border-[#004B8D] text-[#004B8D]"
+                                />
+                                <Label
+                                  htmlFor={`possui-sim-${categoria.id}`}
+                                  className="text-xs sm:text-sm font-bold text-[#102A43] cursor-pointer"
+                                >
+                                  Sim
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2 cursor-pointer bg-[#F4F6F9] hover:bg-[#E8F1F8] px-3 py-1.5 rounded-lg border border-[#D3DFE9] transition-colors">
+                                <RadioGroupItem
+                                  value="Não"
+                                  id={`possui-nao-${categoria.id}`}
+                                  className="border-[#004B8D] text-[#004B8D]"
+                                />
+                                <Label
+                                  htmlFor={`possui-nao-${categoria.id}`}
+                                  className="text-xs sm:text-sm font-bold text-[#102A43] cursor-pointer"
+                                >
+                                  Não
+                                </Label>
+                              </div>
+                            </RadioGroup>
+                          </div>
                         </div>
 
-                        {/* 2. Se a resposta for "Sim", mostrar campos adicionais */}
+                        {/* 2. Se a resposta for "Sim", mostrar campos adicionais estruturados */}
                         {isPossuiSim && (
-                          <div className="bg-white p-4 rounded-xl border border-[#004B8D]/20 space-y-4 animate-page-enter">
-                            <h4 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] flex items-center gap-1.5">
-                              <UserCheck className="w-4 h-4 text-[#004B8D]" />
-                              Detalhes do Prestador, Responsabilidade Técnica e Prazos
-                            </h4>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                              {/* Prestador de serviço */}
-                              <div className="space-y-1.5">
-                                <Label
-                                  htmlFor={`prestador-${categoria.id}`}
-                                  className="text-xs font-semibold text-[#102A43]"
-                                >
-                                  Nome do prestador de serviço
-                                </Label>
-                                <Input
-                                  id={`prestador-${categoria.id}`}
-                                  placeholder="Ex.: Empresa ABC Engenharia Ltda"
-                                  value={itemState.prestadorServico || ''}
-                                  onChange={(e) =>
-                                    handleFieldChange(categoria.id, {
-                                      prestadorServico: e.target.value,
-                                    })
-                                  }
-                                  className="border-[#D3DFE9] focus-visible:ring-[#004B8D] text-sm"
-                                />
+                          <div className="bg-white rounded-xl border border-[#004B8D]/20 shadow-xs divide-y divide-[#D3DFE9]/60 animate-page-enter">
+                            {/* Card Sub-header */}
+                            <div className="px-5 py-3.5 bg-gradient-to-r from-[#E8F1F8]/80 to-white flex items-center justify-between rounded-t-xl">
+                              <div className="flex items-center gap-2">
+                                <UserCheck className="w-4 h-4 text-[#004B8D]" />
+                                <span className="text-xs font-bold uppercase tracking-wider text-[#004B8D]">
+                                  Dados de Fiscalização Técnica & Responsabilidade
+                                </span>
                               </div>
+                              <span className="text-[11px] text-[#486581] font-medium hidden sm:inline">
+                                Todos os campos marcados com * são obrigatórios
+                              </span>
+                            </div>
 
-                              {/* Número da ART (oculto se exigeArt = false) */}
-                              {categoria.exigeArt ? (
-                                <div className="space-y-1.5">
-                                  <div className="flex items-center justify-between">
-                                    <Label
-                                      htmlFor={`art-${categoria.id}`}
-                                      className="text-xs font-semibold text-[#102A43]"
-                                    >
-                                      Número da ART (CREA-PI){' '}
-                                      <span className="text-red-500">*</span>
-                                    </Label>
-                                    <span className="text-[11px] text-[#004B8D] font-bold">
-                                      Obrigatória
-                                    </span>
-                                  </div>
+                            <div className="p-5 sm:p-6 space-y-5">
+                              {/* Grid: Prestador de Serviço e Número da ART */}
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                                {/* Campo: Nome do prestador de serviço */}
+                                <div className="space-y-2">
+                                  <Label
+                                    htmlFor={`prestador-${categoria.id}`}
+                                    className="text-xs font-bold text-[#102A43] flex items-center gap-1.5"
+                                  >
+                                    <Building2 className="w-3.5 h-3.5 text-[#004B8D]" />
+                                    Nome do prestador de serviço
+                                  </Label>
                                   <Input
-                                    id={`art-${categoria.id}`}
-                                    placeholder="Ex.: PI2026123456"
-                                    value={itemState.numeroArt || ''}
+                                    id={`prestador-${categoria.id}`}
+                                    placeholder="Ex.: Empresa ABC Engenharia Ltda ou Profissional"
+                                    value={itemState.prestadorServico || ''}
                                     onChange={(e) =>
                                       handleFieldChange(categoria.id, {
-                                        numeroArt: e.target.value,
+                                        prestadorServico: e.target.value,
                                       })
                                     }
-                                    className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] text-sm ${
-                                      !itemState.numeroArt?.trim()
-                                        ? 'border-amber-400 bg-amber-50/40'
-                                        : ''
-                                    }`}
+                                    className="border-[#D3DFE9] focus-visible:ring-[#004B8D] text-sm bg-white h-10 shadow-2xs"
                                   />
+                                  <p className="text-[11px] text-[#627D98]">
+                                    Empresa contratada ou responsável técnico pelas instalações.
+                                  </p>
                                 </div>
-                              ) : null}
 
-                              {/* Comprovante entregue no ato da fiscalização */}
-                              <div className="space-y-2">
-                                <Label className="text-xs font-semibold text-[#102A43] block">
-                                  Comprovante entregue no ato da fiscalização?{' '}
-                                  <span className="text-red-500">*</span>
-                                </Label>
-                                <RadioGroup
-                                  value={itemState.comprovanteEntregue || ''}
-                                  onValueChange={(val) =>
-                                    handleFieldChange(categoria.id, {
-                                      comprovanteEntregue: val as 'Sim' | 'Não',
-                                    })
-                                  }
-                                  className="flex items-center gap-6 pt-1"
-                                >
-                                  <div className="flex items-center space-x-2">
-                                    <RadioGroupItem
-                                      value="Sim"
-                                      id={`comp-sim-${categoria.id}`}
-                                      className="border-[#004B8D] text-[#004B8D]"
+                                {/* Campo: Número da ART (se exigeArt = true) */}
+                                {categoria.exigeArt ? (
+                                  <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                      <Label
+                                        htmlFor={`art-${categoria.id}`}
+                                        className="text-xs font-bold text-[#102A43] flex items-center gap-1.5"
+                                      >
+                                        <FileCheck2 className="w-3.5 h-3.5 text-[#004B8D]" />
+                                        Número da ART (CREA-PI){' '}
+                                        <span className="text-rose-600">*</span>
+                                      </Label>
+                                      <span className="text-[10px] text-[#004B8D] bg-[#E8F1F8] px-2 py-0.5 rounded font-bold uppercase tracking-wider">
+                                        Obrigatória
+                                      </span>
+                                    </div>
+                                    <Input
+                                      id={`art-${categoria.id}`}
+                                      placeholder="Ex.: PI20260012345"
+                                      value={itemState.numeroArt || ''}
+                                      onChange={(e) =>
+                                        handleFieldChange(categoria.id, {
+                                          numeroArt: e.target.value,
+                                        })
+                                      }
+                                      className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] text-sm bg-white h-10 shadow-2xs font-mono ${
+                                        !itemState.numeroArt?.trim()
+                                          ? 'border-rose-300 bg-rose-50/20'
+                                          : ''
+                                      }`}
                                     />
-                                    <Label
-                                      htmlFor={`comp-sim-${categoria.id}`}
-                                      className="text-xs font-semibold text-[#102A43] cursor-pointer"
-                                    >
-                                      Sim
-                                    </Label>
+                                    <p className="text-[11px] text-[#627D98]">
+                                      Anotação de Responsabilidade Técnica registrada no conselho.
+                                    </p>
                                   </div>
-                                  <div className="flex items-center space-x-2">
-                                    <RadioGroupItem
-                                      value="Não"
-                                      id={`comp-nao-${categoria.id}`}
-                                      className="border-[#004B8D] text-[#004B8D]"
-                                    />
-                                    <Label
-                                      htmlFor={`comp-nao-${categoria.id}`}
-                                      className="text-xs font-semibold text-[#102A43] cursor-pointer"
-                                    >
-                                      Não
+                                ) : (
+                                  <div className="space-y-2">
+                                    <Label className="text-xs font-bold text-[#829AB1] flex items-center gap-1.5">
+                                      <FileCheck2 className="w-3.5 h-3.5 text-[#829AB1]" />
+                                      Número da ART
                                     </Label>
+                                    <div className="h-10 px-3 flex items-center bg-[#F4F6F9] border border-[#D3DFE9] rounded-md text-xs text-[#627D98] italic">
+                                      Esta categoria técnica não exige obrigatoriedade de ART.
+                                    </div>
                                   </div>
-                                </RadioGroup>
+                                )}
                               </div>
 
-                              {/* Data da última verificação (se periodicidadeDias preenchido) */}
-                              {categoria.periodicidadeDias && categoria.periodicidadeDias > 0 ? (
-                                <div className="space-y-1.5">
-                                  <div className="flex items-center justify-between">
-                                    <Label
-                                      htmlFor={`data-verif-${categoria.id}`}
-                                      className="text-xs font-semibold text-[#102A43]"
-                                    >
-                                      Data da última verificação
+                              {/* Grid: Comprovante Entregue e Data da Última Verificação */}
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-2 border-t border-[#D3DFE9]/60">
+                                {/* Campo: Comprovante entregue no ato da fiscalização */}
+                                <div className="space-y-2.5">
+                                  <div>
+                                    <Label className="text-xs font-bold text-[#102A43] flex items-center gap-1.5">
+                                      <ClipboardCheck className="w-3.5 h-3.5 text-[#004B8D]" />
+                                      Comprovante entregue no ato da fiscalização?{' '}
+                                      <span className="text-rose-600">*</span>
                                     </Label>
-                                    <span className="text-[11px] text-[#486581]">
-                                      Validade: {categoria.periodicidadeDias} dias
-                                    </span>
+                                    <p className="text-[11px] text-[#627D98] mt-0.5">
+                                      Laudo, relatório de manutenção, nota fiscal ou certificado.
+                                    </p>
                                   </div>
-                                  <Input
-                                    id={`data-verif-${categoria.id}`}
-                                    type="date"
-                                    value={itemState.dataUltimaVerificacao || ''}
-                                    onChange={(e) =>
+
+                                  <RadioGroup
+                                    value={itemState.comprovanteEntregue || ''}
+                                    onValueChange={(val) =>
                                       handleFieldChange(categoria.id, {
-                                        dataUltimaVerificacao: e.target.value,
+                                        comprovanteEntregue: val as 'Sim' | 'Não',
                                       })
                                     }
-                                    className="border-[#D3DFE9] focus-visible:ring-[#004B8D] text-sm"
-                                  />
+                                    className="flex items-center gap-4 pt-0.5"
+                                  >
+                                    <div className="flex items-center space-x-2 cursor-pointer bg-[#F4F6F9] hover:bg-[#E8F1F8] px-3.5 py-1.5 rounded-lg border border-[#D3DFE9] transition-colors">
+                                      <RadioGroupItem
+                                        value="Sim"
+                                        id={`comp-sim-${categoria.id}`}
+                                        className="border-[#004B8D] text-[#004B8D]"
+                                      />
+                                      <Label
+                                        htmlFor={`comp-sim-${categoria.id}`}
+                                        className="text-xs sm:text-sm font-semibold text-[#102A43] cursor-pointer"
+                                      >
+                                        Sim (Entregue)
+                                      </Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2 cursor-pointer bg-[#F4F6F9] hover:bg-[#E8F1F8] px-3.5 py-1.5 rounded-lg border border-[#D3DFE9] transition-colors">
+                                      <RadioGroupItem
+                                        value="Não"
+                                        id={`comp-nao-${categoria.id}`}
+                                        className="border-[#004B8D] text-[#004B8D]"
+                                      />
+                                      <Label
+                                        htmlFor={`comp-nao-${categoria.id}`}
+                                        className="text-xs sm:text-sm font-semibold text-[#102A43] cursor-pointer"
+                                      >
+                                        Não (Pendente)
+                                      </Label>
+                                    </div>
+                                  </RadioGroup>
                                 </div>
-                              ) : null}
+
+                                {/* Campo: Data da última verificação */}
+                                {categoria.periodicidadeDias && categoria.periodicidadeDias > 0 ? (
+                                  <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                      <Label
+                                        htmlFor={`data-verif-${categoria.id}`}
+                                        className="text-xs font-bold text-[#102A43] flex items-center gap-1.5"
+                                      >
+                                        <Calendar className="w-3.5 h-3.5 text-[#004B8D]" />
+                                        Data da última verificação / laudo{' '}
+                                        <span className="text-rose-600">*</span>
+                                      </Label>
+                                      <span className="text-[11px] text-[#004B8D] font-bold">
+                                        Validade: {categoria.periodicidadeDias} dias
+                                      </span>
+                                    </div>
+                                    <Input
+                                      id={`data-verif-${categoria.id}`}
+                                      type="date"
+                                      value={itemState.dataUltimaVerificacao || ''}
+                                      onChange={(e) =>
+                                        handleFieldChange(categoria.id, {
+                                          dataUltimaVerificacao: e.target.value,
+                                        })
+                                      }
+                                      className="border-[#D3DFE9] focus-visible:ring-[#004B8D] text-sm bg-white h-10 shadow-2xs"
+                                    />
+                                    <p className="text-[11px] text-[#627D98]">
+                                      Inspeções com mais de {categoria.periodicidadeDias} dias serão
+                                      marcadas como vencidas.
+                                    </p>
+                                  </div>
+                                ) : (
+                                  <div className="space-y-2">
+                                    <Label className="text-xs font-bold text-[#829AB1] flex items-center gap-1.5">
+                                      <Calendar className="w-3.5 h-3.5 text-[#829AB1]" />
+                                      Periodicidade de inspeção
+                                    </Label>
+                                    <div className="h-10 px-3 flex items-center bg-[#F4F6F9] border border-[#D3DFE9] rounded-md text-xs text-[#627D98]">
+                                      Esta categoria não possui ciclo de renovação temporal
+                                      obrigatório.
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
                         )}
 
-                        {/* Situação explicativa e botão Salvar */}
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
-                          <div className="flex items-center gap-2 text-xs text-[#486581]">
-                            <span>Situação:</span>
-                            {renderSituacaoBadge(situacao)}
+                        {/* 3. Rodapé do Item: Situação Calculada + Botão de Ação */}
+                        <div className="bg-white p-4 rounded-xl border border-[#D3DFE9] flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 shadow-xs">
+                          <div className="flex flex-wrap items-center gap-2 text-xs text-[#486581]">
+                            <span className="font-semibold text-[#102A43]">Situação avaliada:</span>
+                            {renderSituacaoBadge(situacao, 'default')}
                             {situacao === 'pendente' && (
-                              <span className="text-amber-700 font-medium text-[11px]">
-                                (Falta ART obrigatória ou comprovante não entregue)
+                              <span className="text-rose-700 font-medium text-[11px] bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                                ART obrigatória não informada ou comprovante ausente
                               </span>
                             )}
                             {situacao === 'vencido' && (
-                              <span className="text-red-600 font-medium text-[11px]">
-                                (Data da verificação extrapolou {categoria.periodicidadeDias} dias)
+                              <span className="text-rose-700 font-medium text-[11px] bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                                Validade expirada (limite: {categoria.periodicidadeDias} dias)
                               </span>
                             )}
                             {situacao === 'conforme' && (
-                              <span className="text-[#004B8D] font-medium text-[11px]">
-                                (Requisitos técnicos atendidos)
+                              <span className="text-emerald-800 font-medium text-[11px] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                                Atende plenamente aos requisitos de fiscalização do CREA-PI
+                              </span>
+                            )}
+                            {situacao === 'não se aplica' && (
+                              <span className="text-[#486581] font-medium text-[11px] bg-[#F4F6F9] px-2 py-0.5 rounded border border-[#D3DFE9]">
+                                Hospital declarou não possuir este sistema
                               </span>
                             )}
                           </div>
 
-                          <div className="flex items-center gap-2 self-end sm:self-auto">
+                          <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
                             <Button
                               size="sm"
                               type="button"
                               onClick={() => handleSaveCategoryItem(categoria)}
                               disabled={itemState.isSaving}
-                              className={`h-8 px-3.5 text-xs font-semibold shadow-sm transition-all ${
+                              className={`h-9 px-4 text-xs font-bold shadow-xs transition-all cursor-pointer ${
                                 itemState.isDirty
                                   ? 'bg-[#004B8D] hover:bg-[#003666] text-white'
                                   : 'bg-[#E8F1F8] text-[#004B8D] hover:bg-[#D3DFE9]'
