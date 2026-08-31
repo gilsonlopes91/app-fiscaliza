@@ -148,20 +148,20 @@ export function HospitalFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0 gap-0 border-[#DDE5DF] bg-white sm:rounded-xl shadow-xl">
-        <DialogHeader className="p-6 pb-4 border-b border-[#DDE5DF] bg-[#F4F7F4]/50">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0 gap-0 border-[#D3DFE9] bg-white sm:rounded-xl shadow-xl">
+        <DialogHeader className="p-6 pb-4 border-b border-[#D3DFE9] bg-[#F4F6F9]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-[#E6F4EE] flex items-center justify-center text-[#0B6E4F] shrink-0">
+            <div className="w-10 h-10 rounded-lg bg-[#E8F1F8] flex items-center justify-center text-[#004B8D] shrink-0 shadow-xs">
               <Building2 className="w-5 h-5 stroke-[2]" />
             </div>
             <div>
-              <DialogTitle className="text-xl font-bold text-[#14201A]">
+              <DialogTitle className="text-xl font-bold text-[#102A43]">
                 {isEditing ? 'Editar Hospital' : 'Novo Hospital'}
               </DialogTitle>
-              <DialogDescription className="text-sm text-[#5C6B63] mt-0.5">
+              <DialogDescription className="text-sm text-[#486581] mt-0.5">
                 {isEditing
-                  ? 'Atualize os dados e informações cadastrais do hospital.'
-                  : 'Preencha os campos abaixo para cadastrar uma nova unidade hospitalar.'}
+                  ? 'Atualize os dados cadastrais da unidade hospitalar no CREA-PI.'
+                  : 'Preencha os campos para cadastrar uma unidade para fiscalização técnica.'}
               </DialogDescription>
             </div>
           </div>
@@ -170,23 +170,24 @@ export function HospitalFormDialog({
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Dados Principais */}
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#0B6E4F] mb-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] mb-3 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#E5A812]" />
               Identificação Geral
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2 space-y-1.5">
-                <Label htmlFor="nome" className="text-sm font-semibold text-[#14201A]">
+                <Label htmlFor="nome" className="text-sm font-semibold text-[#102A43]">
                   Nome do Hospital <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="nome"
-                  placeholder="Ex: Hospital Municipal Dr. José Silva"
+                  placeholder="Ex: Hospital Regional Dr. Francisco Ayres"
                   value={formData.nome}
                   onChange={(e) => {
                     setFormData({ ...formData, nome: e.target.value })
                     if (errors.nome) setErrors({ ...errors, nome: '' })
                   }}
-                  className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                  className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                     errors.nome ? 'border-red-500 focus-visible:ring-red-500' : ''
                   }`}
                 />
@@ -196,18 +197,18 @@ export function HospitalFormDialog({
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="municipio" className="text-sm font-semibold text-[#14201A]">
+                <Label htmlFor="municipio" className="text-sm font-semibold text-[#102A43]">
                   Município <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="municipio"
-                  placeholder="Ex: São Paulo"
+                  placeholder="Ex: Teresina"
                   value={formData.municipio}
                   onChange={(e) => {
                     setFormData({ ...formData, municipio: e.target.value })
                     if (errors.municipio) setErrors({ ...errors, municipio: '' })
                   }}
-                  className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                  className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                     errors.municipio ? 'border-red-500 focus-visible:ring-red-500' : ''
                   }`}
                 />
@@ -217,7 +218,7 @@ export function HospitalFormDialog({
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="cnes" className="text-sm font-semibold text-[#14201A]">
+                <Label htmlFor="cnes" className="text-sm font-semibold text-[#102A43]">
                   CNES (7 dígitos) <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -230,7 +231,7 @@ export function HospitalFormDialog({
                     setFormData({ ...formData, cnes: val })
                     if (errors.cnes) setErrors({ ...errors, cnes: '' })
                   }}
-                  className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                  className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                     errors.cnes ? 'border-red-500 focus-visible:ring-red-500' : ''
                   }`}
                 />
@@ -240,7 +241,7 @@ export function HospitalFormDialog({
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="tipo" className="text-sm font-semibold text-[#14201A]">
+                <Label htmlFor="tipo" className="text-sm font-semibold text-[#102A43]">
                   Tipo de Estabelecimento
                 </Label>
                 <Select
@@ -252,7 +253,7 @@ export function HospitalFormDialog({
                     })
                   }
                 >
-                  <SelectTrigger id="tipo" className="border-[#DDE5DF] focus:ring-[#0B6E4F]">
+                  <SelectTrigger id="tipo" className="border-[#D3DFE9] focus:ring-[#004B8D]">
                     <SelectValue placeholder="Selecione o tipo" />
                   </SelectTrigger>
                   <SelectContent>
@@ -267,7 +268,7 @@ export function HospitalFormDialog({
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="cnpj" className="text-sm font-semibold text-[#14201A]">
+                <Label htmlFor="cnpj" className="text-sm font-semibold text-[#102A43]">
                   CNPJ
                 </Label>
                 <Input
@@ -280,7 +281,7 @@ export function HospitalFormDialog({
                     setFormData({ ...formData, cnpj: formatted })
                     if (errors.cnpj) setErrors({ ...errors, cnpj: '' })
                   }}
-                  className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                  className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                     errors.cnpj ? 'border-red-500 focus-visible:ring-red-500' : ''
                   }`}
                 />
@@ -290,7 +291,7 @@ export function HospitalFormDialog({
               </div>
 
               <div className="space-y-1.5 sm:col-span-2">
-                <Label htmlFor="cnpj_mantenedora" className="text-sm font-semibold text-[#14201A]">
+                <Label htmlFor="cnpj_mantenedora" className="text-sm font-semibold text-[#102A43]">
                   CNPJ da Mantenedora
                 </Label>
                 <Input
@@ -303,7 +304,7 @@ export function HospitalFormDialog({
                     setFormData({ ...formData, cnpj_mantenedora: formatted })
                     if (errors.cnpj_mantenedora) setErrors({ ...errors, cnpj_mantenedora: '' })
                   }}
-                  className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                  className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                     errors.cnpj_mantenedora ? 'border-red-500 focus-visible:ring-red-500' : ''
                   }`}
                 />
@@ -315,46 +316,48 @@ export function HospitalFormDialog({
           </div>
 
           {/* Endereço */}
-          <div className="pt-2 border-t border-[#DDE5DF]">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#0B6E4F] mb-3">
+          <div className="pt-2 border-t border-[#D3DFE9]">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] mb-3 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#E5A812]" />
               Localização
             </h3>
             <div className="space-y-1.5">
-              <Label htmlFor="endereco" className="text-sm font-semibold text-[#14201A]">
+              <Label htmlFor="endereco" className="text-sm font-semibold text-[#102A43]">
                 Endereço Completo
               </Label>
               <Textarea
                 id="endereco"
                 rows={2}
-                placeholder="Rua, número, bairro, CEP, complementos..."
+                placeholder="Avenida / Rua, número, bairro, CEP, complementos..."
                 value={formData.endereco}
                 onChange={(e) => setFormData({ ...formData, endereco: e.target.value })}
-                className="border-[#DDE5DF] focus-visible:ring-[#0B6E4F] resize-none"
+                className="border-[#D3DFE9] focus-visible:ring-[#004B8D] resize-none"
               />
             </div>
           </div>
 
           {/* Responsável pelas Informações */}
-          <div className="pt-2 border-t border-[#DDE5DF]">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#0B6E4F] mb-3">
+          <div className="pt-2 border-t border-[#D3DFE9]">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] mb-3 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#E5A812]" />
               Responsável pelas Informações
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="responsavel" className="text-sm font-semibold text-[#14201A]">
+                <Label htmlFor="responsavel" className="text-sm font-semibold text-[#102A43]">
                   Nome do Responsável
                 </Label>
                 <Input
                   id="responsavel"
-                  placeholder="Ex: Dr. Carlos Eduardo Medeiros"
+                  placeholder="Ex: Engenheiro(a) ou Diretor(a)"
                   value={formData.responsavel}
                   onChange={(e) => setFormData({ ...formData, responsavel: e.target.value })}
-                  className="border-[#DDE5DF] focus-visible:ring-[#0B6E4F]"
+                  className="border-[#D3DFE9] focus-visible:ring-[#004B8D]"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="cpf_responsavel" className="text-sm font-semibold text-[#14201A]">
+                <Label htmlFor="cpf_responsavel" className="text-sm font-semibold text-[#102A43]">
                   CPF do Responsável
                 </Label>
                 <Input
@@ -367,7 +370,7 @@ export function HospitalFormDialog({
                     setFormData({ ...formData, cpf_responsavel: formatted })
                     if (errors.cpf_responsavel) setErrors({ ...errors, cpf_responsavel: '' })
                   }}
-                  className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                  className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                     errors.cpf_responsavel ? 'border-red-500 focus-visible:ring-red-500' : ''
                   }`}
                 />
@@ -378,13 +381,13 @@ export function HospitalFormDialog({
             </div>
           </div>
 
-          <DialogFooter className="pt-4 border-t border-[#DDE5DF] flex flex-col sm:flex-row gap-2 sm:justify-end">
+          <DialogFooter className="pt-4 border-t border-[#D3DFE9] flex flex-col sm:flex-row gap-2 sm:justify-end">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={isSubmitting}
-              className="border-[#DDE5DF] text-[#5C6B63] hover:text-[#14201A] hover:bg-[#F4F7F4]"
+              className="border-[#D3DFE9] text-[#486581] hover:text-[#102A43] hover:bg-[#F4F6F9]"
             >
               <X className="w-4 h-4 mr-1.5" />
               Cancelar
@@ -392,7 +395,7 @@ export function HospitalFormDialog({
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm"
+              className="bg-[#004B8D] hover:bg-[#003666] text-white shadow-sm font-semibold"
             >
               {isSubmitting ? (
                 <>

@@ -81,7 +81,7 @@ export default function VistoriaPage() {
   const [filterSituacao, setFilterSituacao] = useState<string>('todos')
 
   useEffect(() => {
-    document.title = 'Vistoria · Fiscalização'
+    document.title = 'Vistoria · CREA-PI Fiscalização'
   }, [])
 
   // 1. Initial Load of Hospitais, Categorias, and existing Vistorias
@@ -350,40 +350,40 @@ export default function VistoriaPage() {
     setSelectedHospitalId(hospitalId)
   }
 
-  // Helper badge component for item situation
+  // Helper badge component for item situation (CREA-PI official palette: Blue/Gold/Gray/Red)
   const renderSituacaoBadge = (situacao: SituacaoChecklist) => {
     switch (situacao) {
       case 'conforme':
         return (
-          <Badge className="bg-[#E6F4EE] text-[#0B6E4F] hover:bg-[#E6F4EE] border border-[#0B6E4F]/30 font-semibold text-xs px-2.5 py-0.5 gap-1 shrink-0">
-            <CheckCircle2 className="w-3.5 h-3.5" />
+          <Badge className="bg-[#E8F1F8] text-[#004B8D] hover:bg-[#E8F1F8] border border-[#004B8D]/30 font-bold text-xs px-2.5 py-0.5 gap-1 shrink-0">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#004B8D]" />
             Conforme
           </Badge>
         )
       case 'pendente':
         return (
-          <Badge className="bg-red-50 text-red-700 hover:bg-red-50 border border-red-300 font-semibold text-xs px-2.5 py-0.5 gap-1 shrink-0">
-            <AlertTriangle className="w-3.5 h-3.5 text-red-600" />
+          <Badge className="bg-amber-50 text-[#8C6200] hover:bg-amber-50 border border-[#E5A812]/50 font-bold text-xs px-2.5 py-0.5 gap-1 shrink-0">
+            <AlertTriangle className="w-3.5 h-3.5 text-[#C88F06]" />
             Pendente
           </Badge>
         )
       case 'vencido':
         return (
-          <Badge className="bg-red-50 text-red-700 hover:bg-red-50 border border-red-300 font-semibold text-xs px-2.5 py-0.5 gap-1 shrink-0">
+          <Badge className="bg-red-50 text-red-700 hover:bg-red-50 border border-red-300 font-bold text-xs px-2.5 py-0.5 gap-1 shrink-0">
             <Clock className="w-3.5 h-3.5 text-red-600" />
             Vencido
           </Badge>
         )
       case 'não se aplica':
         return (
-          <Badge className="bg-[#F4F7F4] text-[#5C6B63] hover:bg-[#F4F7F4] border border-[#DDE5DF] font-medium text-xs px-2.5 py-0.5 gap-1 shrink-0">
-            <XCircle className="w-3.5 h-3.5 text-[#8E9D94]" />
+          <Badge className="bg-[#F4F6F9] text-[#486581] hover:bg-[#F4F6F9] border border-[#D3DFE9] font-medium text-xs px-2.5 py-0.5 gap-1 shrink-0">
+            <XCircle className="w-3.5 h-3.5 text-[#829AB1]" />
             Não se aplica
           </Badge>
         )
       default:
         return (
-          <Badge className="bg-[#F4F7F4] text-[#8E9D94] hover:bg-[#F4F7F4] border border-[#DDE5DF] font-medium text-xs px-2.5 py-0.5 gap-1 shrink-0">
+          <Badge className="bg-[#F4F6F9] text-[#829AB1] hover:bg-[#F4F6F9] border border-[#D3DFE9] font-medium text-xs px-2.5 py-0.5 gap-1 shrink-0">
             <HelpCircle className="w-3.5 h-3.5" />
             Não avaliado
           </Badge>
@@ -411,9 +411,9 @@ export default function VistoriaPage() {
 
   if (isLoadingInitial) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 text-[#5C6B63] animate-page-enter">
-        <RefreshCw className="w-8 h-8 animate-spin text-[#0B6E4F] mb-3" />
-        <p className="text-sm font-medium">Carregando dados da vistoria...</p>
+      <div className="flex flex-col items-center justify-center py-24 text-[#486581] animate-page-enter">
+        <RefreshCw className="w-8 h-8 animate-spin text-[#004B8D] mb-3" />
+        <p className="text-sm font-medium">Carregando checklist de vistoria CREA-PI...</p>
       </div>
     )
   }
@@ -422,27 +422,27 @@ export default function VistoriaPage() {
   if (hospitais.length === 0) {
     return (
       <div className="animate-page-enter">
-        <h1 className="text-[22px] sm:text-[28px] font-bold text-[#14201A] tracking-[-0.2px] leading-tight mb-2">
-          Vistoria
+        <h1 className="text-[22px] sm:text-[28px] font-bold text-[#102A43] tracking-tight leading-tight mb-2">
+          Vistoria Técnica
         </h1>
-        <p className="text-sm text-[#5C6B63] mb-8">
-          Checklist técnico de engenharia, instalações e requisitos regulatórios.
+        <p className="text-sm text-[#486581] mb-8">
+          Checklist técnico de engenharia, instalações hospitalares e conformidade de ARTs.
         </p>
 
-        <div className="mt-4 flex flex-col items-center justify-center text-center py-16 px-4 bg-white rounded-2xl border border-[#DDE5DF] shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
-          <div className="w-20 h-20 rounded-full bg-[#E6F4EE] flex items-center justify-center text-[#0B6E4F] mb-4 shadow-sm">
+        <div className="mt-4 flex flex-col items-center justify-center text-center py-16 px-4 bg-white rounded-2xl border border-[#D3DFE9] shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+          <div className="w-20 h-20 rounded-full bg-[#E8F1F8] flex items-center justify-center text-[#004B8D] mb-4 shadow-xs">
             <Building2 className="w-9 h-9 stroke-[1.8]" />
           </div>
-          <p className="text-lg font-bold text-[#14201A] max-w-sm mb-1">
+          <p className="text-lg font-bold text-[#102A43] max-w-sm mb-1">
             Nenhum hospital cadastrado
           </p>
-          <p className="text-sm text-[#5C6B63] max-w-sm mb-6">
+          <p className="text-sm text-[#486581] max-w-sm mb-6">
             Para iniciar uma vistoria técnica, você precisa primeiro cadastrar ou importar um
             hospital.
           </p>
           <Button
             onClick={() => navigate('/hospitais')}
-            className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold"
+            className="bg-[#004B8D] hover:bg-[#003666] text-white shadow-sm font-semibold"
           >
             Ir para cadastro de Hospitais
             <ArrowRight className="w-4 h-4 ml-1.5" />
@@ -457,23 +457,23 @@ export default function VistoriaPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-[22px] sm:text-[28px] font-bold text-[#14201A] tracking-[-0.2px] leading-tight">
-            Vistoria Técnica
+          <h1 className="text-[22px] sm:text-[28px] font-bold text-[#102A43] tracking-tight leading-tight">
+            Vistoria Técnica CREA-PI
           </h1>
-          <p className="text-sm text-[#5C6B63] mt-0.5">
+          <p className="text-sm text-[#486581] mt-0.5">
             Checklist de verificação, ARTs e conformidade das instalações hospitalares
           </p>
         </div>
 
         {/* Hospital Selector Dropdown (when multiple exist or switching) */}
         <div className="flex items-center gap-2.5">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 bg-white p-2 sm:px-3 sm:py-2 rounded-xl border border-[#DDE5DF] shadow-sm">
-            <span className="text-xs font-semibold text-[#5C6B63] flex items-center gap-1">
-              <Building2 className="w-3.5 h-3.5 text-[#0B6E4F]" />
-              Hospital da vistoria:
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 bg-white p-2 sm:px-3 sm:py-2 rounded-xl border border-[#D3DFE9] shadow-sm">
+            <span className="text-xs font-semibold text-[#486581] flex items-center gap-1">
+              <Building2 className="w-3.5 h-3.5 text-[#004B8D]" />
+              Hospital selecionado:
             </span>
             <Select value={selectedHospitalId} onValueChange={handleSelectHospital}>
-              <SelectTrigger className="w-full sm:w-[260px] h-9 border-[#DDE5DF] font-medium text-xs sm:text-sm text-[#14201A] focus:ring-[#0B6E4F]">
+              <SelectTrigger className="w-full sm:w-[260px] h-9 border-[#D3DFE9] font-semibold text-xs sm:text-sm text-[#102A43] focus:ring-[#004B8D]">
                 <SelectValue placeholder="Selecione um hospital" />
               </SelectTrigger>
               <SelectContent>
@@ -484,7 +484,7 @@ export default function VistoriaPage() {
                       <div className="flex items-center justify-between w-full gap-2">
                         <span className="truncate">{h.nome}</span>
                         {hasVistoria && (
-                          <span className="text-[10px] text-[#0B6E4F] bg-[#E6F4EE] px-1.5 py-0.5 rounded font-medium shrink-0">
+                          <span className="text-[10px] text-[#004B8D] bg-[#E8F1F8] px-1.5 py-0.5 rounded font-semibold shrink-0">
                             Em andamento
                           </span>
                         )}
@@ -500,39 +500,41 @@ export default function VistoriaPage() {
 
       {/* Active Hospital Summary Banner */}
       {activeHospital && (
-        <div className="bg-white rounded-2xl border border-[#DDE5DF] p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+        <div className="bg-white rounded-2xl border border-[#D3DFE9] p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#E6F4EE] text-[#0B6E4F] flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+              <div className="w-12 h-12 rounded-xl bg-[#E8F1F8] text-[#004B8D] flex items-center justify-center shrink-0 shadow-xs mt-0.5">
                 <ClipboardCheck className="w-6 h-6 stroke-[2]" />
               </div>
               <div className="space-y-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="text-lg sm:text-xl font-bold text-[#14201A] leading-tight">
+                  <h2 className="text-lg sm:text-xl font-bold text-[#102A43] leading-tight">
                     {activeHospital.nome}
                   </h2>
                   {activeHospital.tipo && (
-                    <Badge className="bg-[#E6F4EE] text-[#0B6E4F] hover:bg-[#E6F4EE] border-0 text-xs font-semibold">
+                    <Badge className="bg-[#E8F1F8] text-[#004B8D] hover:bg-[#E8F1F8] border-0 text-xs font-semibold">
                       {activeHospital.tipo}
                     </Badge>
                   )}
                 </div>
-                <div className="text-xs text-[#5C6B63] flex flex-wrap items-center gap-3">
+                <div className="text-xs text-[#486581] flex flex-wrap items-center gap-3">
                   <span>
                     Município:{' '}
-                    <strong className="text-[#14201A]">{activeHospital.municipio}</strong>
+                    <strong className="text-[#102A43]">{activeHospital.municipio}</strong>
                   </span>
                   <span>•</span>
                   <span>
                     CNES:{' '}
-                    <strong className="font-mono text-[#14201A]">{activeHospital.cnes}</strong>
+                    <strong className="font-mono text-[#004B8D] font-bold">
+                      {activeHospital.cnes}
+                    </strong>
                   </span>
                   {activeHospital.responsavel && (
                     <>
                       <span>•</span>
                       <span>
                         Resp.:{' '}
-                        <strong className="text-[#14201A]">{activeHospital.responsavel}</strong>
+                        <strong className="text-[#102A43]">{activeHospital.responsavel}</strong>
                       </span>
                     </>
                   )}
@@ -541,26 +543,26 @@ export default function VistoriaPage() {
             </div>
 
             {/* Total Pending / Expired Highlight Box */}
-            <div className="flex flex-wrap items-center gap-3 bg-[#F4F7F4]/80 p-3.5 sm:px-4 sm:py-3 rounded-xl border border-[#DDE5DF]">
+            <div className="flex flex-wrap items-center gap-3 bg-[#F4F6F9] p-3.5 sm:px-4 sm:py-3 rounded-xl border border-[#D3DFE9]">
               <div className="flex items-center gap-2.5">
                 <div
                   className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-base shadow-sm ${
                     checklistSummary.totalAtencao > 0
-                      ? 'bg-red-500 text-white'
-                      : 'bg-[#0B6E4F] text-white'
+                      ? 'bg-[#E5A812] text-[#102A43]'
+                      : 'bg-[#004B8D] text-white'
                   }`}
                 >
                   {checklistSummary.totalAtencao}
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-[#14201A]">
+                  <div className="text-xs font-bold text-[#102A43]">
                     {checklistSummary.totalAtencao === 0
                       ? 'Nenhuma não conformidade'
                       : checklistSummary.totalAtencao === 1
-                        ? '1 item pendente/vencido'
+                        ? '1 item pendente / vencido'
                         : `${checklistSummary.totalAtencao} itens pendentes ou vencidos`}
                   </div>
-                  <div className="text-[11px] text-[#5C6B63]">
+                  <div className="text-[11px] text-[#486581]">
                     {checklistSummary.pendente} pendentes • {checklistSummary.vencido} vencidos •{' '}
                     {checklistSummary.conforme} conformes
                   </div>
@@ -570,7 +572,7 @@ export default function VistoriaPage() {
           </div>
 
           {/* Quick Filter Bar */}
-          <div className="mt-5 pt-4 border-t border-[#DDE5DF] flex flex-wrap items-center justify-between gap-3">
+          <div className="mt-5 pt-4 border-t border-[#D3DFE9] flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-1.5">
               <Button
                 size="sm"
@@ -578,8 +580,8 @@ export default function VistoriaPage() {
                 onClick={() => setFilterSituacao('todos')}
                 className={`text-xs h-8 px-3 font-semibold ${
                   filterSituacao === 'todos'
-                    ? 'bg-[#0B6E4F] hover:bg-[#095A41] text-white'
-                    : 'border-[#DDE5DF] text-[#5C6B63] hover:text-[#14201A]'
+                    ? 'bg-[#004B8D] hover:bg-[#003666] text-white'
+                    : 'border-[#D3DFE9] text-[#486581] hover:text-[#102A43]'
                 }`}
               >
                 Todos ({checklistSummary.total})
@@ -591,8 +593,8 @@ export default function VistoriaPage() {
                 onClick={() => setFilterSituacao('atencao')}
                 className={`text-xs h-8 px-3 font-semibold ${
                   filterSituacao === 'atencao'
-                    ? 'bg-red-600 hover:bg-red-700 text-white'
-                    : 'border-red-200 text-red-700 hover:bg-red-50'
+                    ? 'bg-[#E5A812] hover:bg-[#C88F06] text-[#102A43] font-bold'
+                    : 'border-amber-300 text-[#8C6200] hover:bg-amber-50'
                 }`}
               >
                 Pendentes / Vencidos ({checklistSummary.totalAtencao})
@@ -604,8 +606,8 @@ export default function VistoriaPage() {
                 onClick={() => setFilterSituacao('conforme')}
                 className={`text-xs h-8 px-3 font-semibold ${
                   filterSituacao === 'conforme'
-                    ? 'bg-[#0B6E4F] hover:bg-[#095A41] text-white'
-                    : 'border-[#DDE5DF] text-[#0B6E4F] hover:bg-[#E6F4EE]'
+                    ? 'bg-[#004B8D] hover:bg-[#003666] text-white'
+                    : 'border-[#D3DFE9] text-[#004B8D] hover:bg-[#E8F1F8]'
                 }`}
               >
                 Conformes ({checklistSummary.conforme})
@@ -617,15 +619,15 @@ export default function VistoriaPage() {
                 onClick={() => setFilterSituacao('nao_se_aplica')}
                 className={`text-xs h-8 px-3 font-semibold ${
                   filterSituacao === 'nao_se_aplica'
-                    ? 'bg-[#5C6B63] hover:bg-[#4A5750] text-white'
-                    : 'border-[#DDE5DF] text-[#5C6B63] hover:bg-[#F4F7F4]'
+                    ? 'bg-[#486581] hover:bg-[#334E68] text-white'
+                    : 'border-[#D3DFE9] text-[#486581] hover:bg-[#F4F6F9]'
                 }`}
               >
                 Não se aplica ({checklistSummary.naoSeAplica})
               </Button>
             </div>
 
-            <div className="text-xs text-[#5C6B63] flex items-center gap-1">
+            <div className="text-xs text-[#486581] flex items-center gap-1 font-medium">
               <span>{checklistSummary.naoRespondido} itens não avaliados</span>
             </div>
           </div>
@@ -634,33 +636,33 @@ export default function VistoriaPage() {
 
       {/* Checklist Categorias Accordion */}
       {isLoadingVistoria ? (
-        <div className="flex flex-col items-center justify-center py-20 text-[#5C6B63] bg-white rounded-2xl border border-[#DDE5DF]">
-          <RefreshCw className="w-8 h-8 animate-spin text-[#0B6E4F] mb-3" />
+        <div className="flex flex-col items-center justify-center py-20 text-[#486581] bg-white rounded-2xl border border-[#D3DFE9]">
+          <RefreshCw className="w-8 h-8 animate-spin text-[#004B8D] mb-3" />
           <p className="text-sm font-medium">Carregando checklist de vistoria...</p>
         </div>
       ) : (
         <div className="space-y-4">
           <div className="flex items-center justify-between px-1">
-            <h3 className="text-base font-bold text-[#14201A] flex items-center gap-2">
-              <FileCheck2 className="w-5 h-5 text-[#0B6E4F]" />
-              Categorias Técnicas de Vistoria
+            <h3 className="text-base font-bold text-[#102A43] flex items-center gap-2">
+              <FileCheck2 className="w-5 h-5 text-[#004B8D]" />
+              Categorias Técnicas de Engenharia
             </h3>
-            <span className="text-xs text-[#5C6B63]">
+            <span className="text-xs text-[#486581]">
               Exibindo {filteredCategorias.length} de {categorias.length} itens
             </span>
           </div>
 
           {filteredCategorias.length === 0 ? (
-            <div className="bg-white rounded-xl border border-[#DDE5DF] p-8 text-center">
-              <Search className="w-8 h-8 text-[#8E9D94] mx-auto mb-2" />
-              <p className="text-sm font-semibold text-[#14201A]">
+            <div className="bg-white rounded-xl border border-[#D3DFE9] p-8 text-center">
+              <Search className="w-8 h-8 text-[#829AB1] mx-auto mb-2" />
+              <p className="text-sm font-semibold text-[#102A43]">
                 Nenhum item com a situação selecionada
               </p>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setFilterSituacao('todos')}
-                className="mt-3 text-xs border-[#DDE5DF] text-[#0B6E4F]"
+                className="mt-3 text-xs border-[#D3DFE9] text-[#004B8D]"
               >
                 Ver todos os itens
               </Button>
@@ -685,40 +687,39 @@ export default function VistoriaPage() {
 
                 const situacao = calculateItemSituacao(itemState, categoria)
                 const isPossuiSim = itemState.possuiSistema === 'Sim'
-                const isPossuiNao = itemState.possuiSistema === 'Não'
 
                 return (
                   <AccordionItem
                     key={categoria.id}
                     value={categoria.id}
-                    className="border border-[#DDE5DF] bg-white rounded-xl px-4 sm:px-6 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all overflow-hidden"
+                    className="border border-[#D3DFE9] bg-white rounded-xl px-4 sm:px-6 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all overflow-hidden"
                   >
                     <AccordionTrigger className="py-4 hover:no-underline flex items-center justify-between gap-3 text-left">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 flex-1 pr-2">
                         <div className="space-y-0.5">
                           <div className="flex items-center gap-2">
-                            <span className="font-bold text-[15px] sm:text-base text-[#14201A]">
+                            <span className="font-bold text-[15px] sm:text-base text-[#102A43]">
                               {categoria.nome}
                             </span>
                           </div>
-                          <div className="flex flex-wrap items-center gap-2 text-xs text-[#5C6B63]">
+                          <div className="flex flex-wrap items-center gap-2 text-xs text-[#486581]">
                             {categoria.exigeArt ? (
-                              <span className="text-[#0B6E4F] font-medium bg-[#E6F4EE] px-2 py-0.5 rounded">
+                              <span className="text-[#004B8D] font-bold bg-[#E8F1F8] px-2 py-0.5 rounded">
                                 Exige ART
                               </span>
                             ) : (
-                              <span className="text-[#5C6B63] bg-[#F4F7F4] px-2 py-0.5 rounded">
+                              <span className="text-[#486581] bg-[#F4F6F9] px-2 py-0.5 rounded">
                                 ART não exigida
                               </span>
                             )}
 
                             {categoria.periodicidadeDias && categoria.periodicidadeDias > 0 ? (
-                              <span className="flex items-center gap-1 text-[#5C6B63] bg-[#F4F7F4] px-2 py-0.5 rounded">
-                                <Calendar className="w-3 h-3 text-[#0B6E4F]" />
+                              <span className="flex items-center gap-1 text-[#486581] bg-[#F4F6F9] px-2 py-0.5 rounded">
+                                <Calendar className="w-3 h-3 text-[#004B8D]" />
                                 Periodicidade: {categoria.periodicidadeDias} dias
                               </span>
                             ) : (
-                              <span className="text-[#8E9D94] bg-[#F4F7F4] px-2 py-0.5 rounded">
+                              <span className="text-[#829AB1] bg-[#F4F6F9] px-2 py-0.5 rounded">
                                 Sem periodicidade fixa
                               </span>
                             )}
@@ -732,11 +733,11 @@ export default function VistoriaPage() {
                       </div>
                     </AccordionTrigger>
 
-                    <AccordionContent className="pt-2 pb-5 border-t border-[#DDE5DF]/80">
+                    <AccordionContent className="pt-2 pb-5 border-t border-[#D3DFE9]/80">
                       <div className="space-y-5 pt-3">
                         {/* 1. Pergunta Principal: Hospital possui este sistema/serviço? */}
-                        <div className="bg-[#F4F7F4]/60 p-4 rounded-xl border border-[#DDE5DF]">
-                          <Label className="text-sm font-bold text-[#14201A] block mb-2.5">
+                        <div className="bg-[#F4F6F9] p-4 rounded-xl border border-[#D3DFE9]">
+                          <Label className="text-sm font-bold text-[#102A43] block mb-2.5">
                             O hospital possui este sistema / serviço?{' '}
                             <span className="text-red-500">*</span>
                           </Label>
@@ -753,11 +754,11 @@ export default function VistoriaPage() {
                               <RadioGroupItem
                                 value="Sim"
                                 id={`possui-sim-${categoria.id}`}
-                                className="border-[#0B6E4F] text-[#0B6E4F]"
+                                className="border-[#004B8D] text-[#004B8D]"
                               />
                               <Label
                                 htmlFor={`possui-sim-${categoria.id}`}
-                                className="text-sm font-semibold text-[#14201A] cursor-pointer"
+                                className="text-sm font-semibold text-[#102A43] cursor-pointer"
                               >
                                 Sim
                               </Label>
@@ -766,11 +767,11 @@ export default function VistoriaPage() {
                               <RadioGroupItem
                                 value="Não"
                                 id={`possui-nao-${categoria.id}`}
-                                className="border-[#0B6E4F] text-[#0B6E4F]"
+                                className="border-[#004B8D] text-[#004B8D]"
                               />
                               <Label
                                 htmlFor={`possui-nao-${categoria.id}`}
-                                className="text-sm font-semibold text-[#14201A] cursor-pointer"
+                                className="text-sm font-semibold text-[#102A43] cursor-pointer"
                               >
                                 Não (Não se aplica)
                               </Label>
@@ -780,9 +781,9 @@ export default function VistoriaPage() {
 
                         {/* 2. Se a resposta for "Sim", mostrar campos adicionais */}
                         {isPossuiSim && (
-                          <div className="bg-white p-4 rounded-xl border border-[#0B6E4F]/20 space-y-4 animate-page-enter">
-                            <h4 className="text-xs font-bold uppercase tracking-wider text-[#0B6E4F] flex items-center gap-1.5">
-                              <UserCheck className="w-4 h-4" />
+                          <div className="bg-white p-4 rounded-xl border border-[#004B8D]/20 space-y-4 animate-page-enter">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] flex items-center gap-1.5">
+                              <UserCheck className="w-4 h-4 text-[#004B8D]" />
                               Detalhes do Prestador, Responsabilidade Técnica e Prazos
                             </h4>
 
@@ -791,7 +792,7 @@ export default function VistoriaPage() {
                               <div className="space-y-1.5">
                                 <Label
                                   htmlFor={`prestador-${categoria.id}`}
-                                  className="text-xs font-semibold text-[#14201A]"
+                                  className="text-xs font-semibold text-[#102A43]"
                                 >
                                   Nome do prestador de serviço
                                 </Label>
@@ -804,7 +805,7 @@ export default function VistoriaPage() {
                                       prestadorServico: e.target.value,
                                     })
                                   }
-                                  className="border-[#DDE5DF] focus-visible:ring-[#0B6E4F] text-sm"
+                                  className="border-[#D3DFE9] focus-visible:ring-[#004B8D] text-sm"
                                 />
                               </div>
 
@@ -814,26 +815,27 @@ export default function VistoriaPage() {
                                   <div className="flex items-center justify-between">
                                     <Label
                                       htmlFor={`art-${categoria.id}`}
-                                      className="text-xs font-semibold text-[#14201A]"
+                                      className="text-xs font-semibold text-[#102A43]"
                                     >
-                                      Número da ART <span className="text-red-500">*</span>
+                                      Número da ART (CREA-PI){' '}
+                                      <span className="text-red-500">*</span>
                                     </Label>
-                                    <span className="text-[11px] text-[#0B6E4F] font-semibold">
-                                      Exigida
+                                    <span className="text-[11px] text-[#004B8D] font-bold">
+                                      Obrigatória
                                     </span>
                                   </div>
                                   <Input
                                     id={`art-${categoria.id}`}
-                                    placeholder="Ex.: 2026123456789"
+                                    placeholder="Ex.: PI2026123456"
                                     value={itemState.numeroArt || ''}
                                     onChange={(e) =>
                                       handleFieldChange(categoria.id, {
                                         numeroArt: e.target.value,
                                       })
                                     }
-                                    className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] text-sm ${
+                                    className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] text-sm ${
                                       !itemState.numeroArt?.trim()
-                                        ? 'border-amber-400 bg-amber-50/30'
+                                        ? 'border-amber-400 bg-amber-50/40'
                                         : ''
                                     }`}
                                   />
@@ -842,7 +844,7 @@ export default function VistoriaPage() {
 
                               {/* Comprovante entregue no ato da fiscalização */}
                               <div className="space-y-2">
-                                <Label className="text-xs font-semibold text-[#14201A] block">
+                                <Label className="text-xs font-semibold text-[#102A43] block">
                                   Comprovante entregue no ato da fiscalização?{' '}
                                   <span className="text-red-500">*</span>
                                 </Label>
@@ -859,11 +861,11 @@ export default function VistoriaPage() {
                                     <RadioGroupItem
                                       value="Sim"
                                       id={`comp-sim-${categoria.id}`}
-                                      className="border-[#0B6E4F] text-[#0B6E4F]"
+                                      className="border-[#004B8D] text-[#004B8D]"
                                     />
                                     <Label
                                       htmlFor={`comp-sim-${categoria.id}`}
-                                      className="text-xs font-semibold text-[#14201A] cursor-pointer"
+                                      className="text-xs font-semibold text-[#102A43] cursor-pointer"
                                     >
                                       Sim
                                     </Label>
@@ -872,11 +874,11 @@ export default function VistoriaPage() {
                                     <RadioGroupItem
                                       value="Não"
                                       id={`comp-nao-${categoria.id}`}
-                                      className="border-[#0B6E4F] text-[#0B6E4F]"
+                                      className="border-[#004B8D] text-[#004B8D]"
                                     />
                                     <Label
                                       htmlFor={`comp-nao-${categoria.id}`}
-                                      className="text-xs font-semibold text-[#14201A] cursor-pointer"
+                                      className="text-xs font-semibold text-[#102A43] cursor-pointer"
                                     >
                                       Não
                                     </Label>
@@ -890,11 +892,11 @@ export default function VistoriaPage() {
                                   <div className="flex items-center justify-between">
                                     <Label
                                       htmlFor={`data-verif-${categoria.id}`}
-                                      className="text-xs font-semibold text-[#14201A]"
+                                      className="text-xs font-semibold text-[#102A43]"
                                     >
                                       Data da última verificação
                                     </Label>
-                                    <span className="text-[11px] text-[#5C6B63]">
+                                    <span className="text-[11px] text-[#486581]">
                                       Validade: {categoria.periodicidadeDias} dias
                                     </span>
                                   </div>
@@ -907,7 +909,7 @@ export default function VistoriaPage() {
                                         dataUltimaVerificacao: e.target.value,
                                       })
                                     }
-                                    className="border-[#DDE5DF] focus-visible:ring-[#0B6E4F] text-sm"
+                                    className="border-[#D3DFE9] focus-visible:ring-[#004B8D] text-sm"
                                   />
                                 </div>
                               ) : null}
@@ -917,23 +919,22 @@ export default function VistoriaPage() {
 
                         {/* Situação explicativa e botão Salvar */}
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
-                          <div className="flex items-center gap-2 text-xs text-[#5C6B63]">
-                            <span>Situação calculada:</span>
+                          <div className="flex items-center gap-2 text-xs text-[#486581]">
+                            <span>Situação:</span>
                             {renderSituacaoBadge(situacao)}
                             {situacao === 'pendente' && (
-                              <span className="text-red-600 font-medium text-[11px]">
+                              <span className="text-amber-700 font-medium text-[11px]">
                                 (Falta ART obrigatória ou comprovante não entregue)
                               </span>
                             )}
                             {situacao === 'vencido' && (
                               <span className="text-red-600 font-medium text-[11px]">
-                                (Data da verificação extrapolou a periodicidade de{' '}
-                                {categoria.periodicidadeDias} dias)
+                                (Data da verificação extrapolou {categoria.periodicidadeDias} dias)
                               </span>
                             )}
                             {situacao === 'conforme' && (
-                              <span className="text-[#0B6E4F] font-medium text-[11px]">
-                                (Todos os requisitos atendidos)
+                              <span className="text-[#004B8D] font-medium text-[11px]">
+                                (Requisitos técnicos atendidos)
                               </span>
                             )}
                           </div>
@@ -946,8 +947,8 @@ export default function VistoriaPage() {
                               disabled={itemState.isSaving}
                               className={`h-8 px-3.5 text-xs font-semibold shadow-sm transition-all ${
                                 itemState.isDirty
-                                  ? 'bg-[#0B6E4F] hover:bg-[#095A41] text-white'
-                                  : 'bg-[#E6F4EE] text-[#0B6E4F] hover:bg-[#D4ECE1]'
+                                  ? 'bg-[#004B8D] hover:bg-[#003666] text-white'
+                                  : 'bg-[#E8F1F8] text-[#004B8D] hover:bg-[#D3DFE9]'
                               }`}
                             >
                               {itemState.isSaving ? (

@@ -217,32 +217,34 @@ export function HospitalDetailSheet({
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent className="w-full sm:max-w-xl md:max-w-2xl overflow-y-auto p-0 flex flex-col bg-white border-l border-[#DDE5DF]">
+        <SheetContent className="w-full sm:max-w-xl md:max-w-2xl overflow-y-auto p-0 flex flex-col bg-white border-l border-[#D3DFE9]">
           {/* Header */}
-          <SheetHeader className="p-6 border-b border-[#DDE5DF] bg-[#F4F7F4]/60 sticky top-0 z-10">
+          <SheetHeader className="p-6 border-b border-[#D3DFE9] bg-[#F4F6F9] sticky top-0 z-10">
             <div className="flex items-start justify-between gap-4 pr-6">
               <div className="flex items-start gap-3">
-                <div className="w-11 h-11 rounded-lg bg-[#E6F4EE] flex items-center justify-center text-[#0B6E4F] shrink-0 mt-0.5 shadow-sm">
+                <div className="w-11 h-11 rounded-lg bg-[#E8F1F8] flex items-center justify-center text-[#004B8D] shrink-0 mt-0.5 shadow-xs">
                   <Building2 className="w-6 h-6 stroke-[2]" />
                 </div>
                 <div>
                   <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <SheetTitle className="text-xl font-bold text-[#14201A] leading-tight text-left">
+                    <SheetTitle className="text-xl font-bold text-[#102A43] leading-tight text-left">
                       {hospital.nome}
                     </SheetTitle>
                     {hospital.tipo && (
-                      <Badge className="bg-[#E6F4EE] text-[#0B6E4F] hover:bg-[#E6F4EE] border-0 text-xs font-semibold">
+                      <Badge className="bg-[#E8F1F8] text-[#004B8D] hover:bg-[#E8F1F8] border-0 text-xs font-semibold">
                         {hospital.tipo}
                       </Badge>
                     )}
                   </div>
-                  <SheetDescription className="text-xs text-[#5C6B63] flex items-center gap-3">
-                    <span className="flex items-center gap-1 font-medium text-[#14201A]">
-                      <MapPin className="w-3.5 h-3.5 text-[#0B6E4F]" />
+                  <SheetDescription className="text-xs text-[#486581] flex items-center gap-3">
+                    <span className="flex items-center gap-1 font-medium text-[#102A43]">
+                      <MapPin className="w-3.5 h-3.5 text-[#004B8D]" />
                       {hospital.municipio}
                     </span>
                     <span>•</span>
-                    <span className="font-mono text-xs">CNES: {hospital.cnes}</span>
+                    <span className="font-mono text-xs text-[#334E68] font-semibold">
+                      CNES: {hospital.cnes}
+                    </span>
                   </SheetDescription>
                 </div>
               </div>
@@ -254,7 +256,7 @@ export function HospitalDetailSheet({
                     size="sm"
                     onClick={handleIniciarVistoria}
                     disabled={isStartingVistoria}
-                    className="shrink-0 bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold h-9 px-3"
+                    className="shrink-0 bg-[#004B8D] hover:bg-[#003666] text-white shadow-sm font-semibold h-9 px-3"
                   >
                     {isStartingVistoria ? (
                       <Loader2 className="w-4 h-4 animate-spin mr-1.5" />
@@ -268,7 +270,7 @@ export function HospitalDetailSheet({
                     size="sm"
                     variant="outline"
                     onClick={() => setIsEditing(true)}
-                    className="shrink-0 border-[#DDE5DF] text-[#0B6E4F] hover:text-[#0B6E4F] hover:bg-[#E6F4EE] font-semibold h-9 px-3"
+                    className="shrink-0 border-[#D3DFE9] text-[#004B8D] hover:text-[#004B8D] hover:bg-[#E8F1F8] font-semibold h-9 px-3"
                   >
                     <Edit2 className="w-4 h-4 mr-1.5" />
                     Editar
@@ -281,19 +283,20 @@ export function HospitalDetailSheet({
           {/* Body */}
           {isEditing ? (
             <form onSubmit={handleSave} className="p-6 space-y-6 flex-1">
-              <div className="bg-[#E6F4EE]/60 border border-[#0B6E4F]/20 rounded-lg p-3 text-xs text-[#0B6E4F] font-medium flex items-center gap-2">
+              <div className="bg-[#E8F1F8] border border-[#004B8D]/20 rounded-lg p-3 text-xs text-[#004B8D] font-medium flex items-center gap-2">
                 <Edit2 className="w-4 h-4 shrink-0" />
                 Modo de edição ativo. Altere os campos e clique em &ldquo;Salvar Alterações&rdquo;.
               </div>
 
               {/* Identificação Geral */}
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#0B6E4F] mb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] mb-3 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#E5A812]" />
                   Identificação Geral
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="sm:col-span-2 space-y-1.5">
-                    <Label htmlFor="edit-nome" className="text-sm font-semibold text-[#14201A]">
+                    <Label htmlFor="edit-nome" className="text-sm font-semibold text-[#102A43]">
                       Nome do Hospital <span className="text-red-500">*</span>
                     </Label>
                     <Input
@@ -303,7 +306,7 @@ export function HospitalDetailSheet({
                         setFormData({ ...formData, nome: e.target.value })
                         if (errors.nome) setErrors({ ...errors, nome: '' })
                       }}
-                      className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                      className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                         errors.nome ? 'border-red-500 focus-visible:ring-red-500' : ''
                       }`}
                     />
@@ -315,7 +318,7 @@ export function HospitalDetailSheet({
                   <div className="space-y-1.5">
                     <Label
                       htmlFor="edit-municipio"
-                      className="text-sm font-semibold text-[#14201A]"
+                      className="text-sm font-semibold text-[#102A43]"
                     >
                       Município <span className="text-red-500">*</span>
                     </Label>
@@ -326,7 +329,7 @@ export function HospitalDetailSheet({
                         setFormData({ ...formData, municipio: e.target.value })
                         if (errors.municipio) setErrors({ ...errors, municipio: '' })
                       }}
-                      className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                      className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                         errors.municipio ? 'border-red-500 focus-visible:ring-red-500' : ''
                       }`}
                     />
@@ -336,7 +339,7 @@ export function HospitalDetailSheet({
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="edit-cnes" className="text-sm font-semibold text-[#14201A]">
+                    <Label htmlFor="edit-cnes" className="text-sm font-semibold text-[#102A43]">
                       CNES (7 dígitos) <span className="text-red-500">*</span>
                     </Label>
                     <Input
@@ -348,7 +351,7 @@ export function HospitalDetailSheet({
                         setFormData({ ...formData, cnes: val })
                         if (errors.cnes) setErrors({ ...errors, cnes: '' })
                       }}
-                      className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                      className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                         errors.cnes ? 'border-red-500 focus-visible:ring-red-500' : ''
                       }`}
                     />
@@ -358,7 +361,7 @@ export function HospitalDetailSheet({
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="edit-tipo" className="text-sm font-semibold text-[#14201A]">
+                    <Label htmlFor="edit-tipo" className="text-sm font-semibold text-[#102A43]">
                       Tipo de Estabelecimento
                     </Label>
                     <Select
@@ -372,7 +375,7 @@ export function HospitalDetailSheet({
                     >
                       <SelectTrigger
                         id="edit-tipo"
-                        className="border-[#DDE5DF] focus:ring-[#0B6E4F]"
+                        className="border-[#D3DFE9] focus:ring-[#004B8D]"
                       >
                         <SelectValue placeholder="Selecione o tipo" />
                       </SelectTrigger>
@@ -388,7 +391,7 @@ export function HospitalDetailSheet({
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="edit-cnpj" className="text-sm font-semibold text-[#14201A]">
+                    <Label htmlFor="edit-cnpj" className="text-sm font-semibold text-[#102A43]">
                       CNPJ
                     </Label>
                     <Input
@@ -401,7 +404,7 @@ export function HospitalDetailSheet({
                         setFormData({ ...formData, cnpj: formatted })
                         if (errors.cnpj) setErrors({ ...errors, cnpj: '' })
                       }}
-                      className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                      className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                         errors.cnpj ? 'border-red-500 focus-visible:ring-red-500' : ''
                       }`}
                     />
@@ -413,7 +416,7 @@ export function HospitalDetailSheet({
                   <div className="space-y-1.5 sm:col-span-2">
                     <Label
                       htmlFor="edit-cnpj_mantenedora"
-                      className="text-sm font-semibold text-[#14201A]"
+                      className="text-sm font-semibold text-[#102A43]"
                     >
                       CNPJ da Mantenedora
                     </Label>
@@ -427,7 +430,7 @@ export function HospitalDetailSheet({
                         setFormData({ ...formData, cnpj_mantenedora: formatted })
                         if (errors.cnpj_mantenedora) setErrors({ ...errors, cnpj_mantenedora: '' })
                       }}
-                      className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                      className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                         errors.cnpj_mantenedora ? 'border-red-500 focus-visible:ring-red-500' : ''
                       }`}
                     />
@@ -441,12 +444,13 @@ export function HospitalDetailSheet({
               </div>
 
               {/* Endereço */}
-              <div className="pt-2 border-t border-[#DDE5DF]">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#0B6E4F] mb-3">
+              <div className="pt-2 border-t border-[#D3DFE9]">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] mb-3 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#E5A812]" />
                   Localização
                 </h3>
                 <div className="space-y-1.5">
-                  <Label htmlFor="edit-endereco" className="text-sm font-semibold text-[#14201A]">
+                  <Label htmlFor="edit-endereco" className="text-sm font-semibold text-[#102A43]">
                     Endereço Completo
                   </Label>
                   <Textarea
@@ -454,21 +458,22 @@ export function HospitalDetailSheet({
                     rows={2}
                     value={formData.endereco}
                     onChange={(e) => setFormData({ ...formData, endereco: e.target.value })}
-                    className="border-[#DDE5DF] focus-visible:ring-[#0B6E4F] resize-none"
+                    className="border-[#D3DFE9] focus-visible:ring-[#004B8D] resize-none"
                   />
                 </div>
               </div>
 
               {/* Responsável */}
-              <div className="pt-2 border-t border-[#DDE5DF]">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#0B6E4F] mb-3">
+              <div className="pt-2 border-t border-[#D3DFE9]">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] mb-3 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#E5A812]" />
                   Responsável pelas Informações
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label
                       htmlFor="edit-responsavel"
-                      className="text-sm font-semibold text-[#14201A]"
+                      className="text-sm font-semibold text-[#102A43]"
                     >
                       Nome do Responsável
                     </Label>
@@ -476,14 +481,14 @@ export function HospitalDetailSheet({
                       id="edit-responsavel"
                       value={formData.responsavel}
                       onChange={(e) => setFormData({ ...formData, responsavel: e.target.value })}
-                      className="border-[#DDE5DF] focus-visible:ring-[#0B6E4F]"
+                      className="border-[#D3DFE9] focus-visible:ring-[#004B8D]"
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <Label
                       htmlFor="edit-cpf_responsavel"
-                      className="text-sm font-semibold text-[#14201A]"
+                      className="text-sm font-semibold text-[#102A43]"
                     >
                       CPF do Responsável
                     </Label>
@@ -497,7 +502,7 @@ export function HospitalDetailSheet({
                         setFormData({ ...formData, cpf_responsavel: formatted })
                         if (errors.cpf_responsavel) setErrors({ ...errors, cpf_responsavel: '' })
                       }}
-                      className={`border-[#DDE5DF] focus-visible:ring-[#0B6E4F] ${
+                      className={`border-[#D3DFE9] focus-visible:ring-[#004B8D] ${
                         errors.cpf_responsavel ? 'border-red-500 focus-visible:ring-red-500' : ''
                       }`}
                     />
@@ -510,13 +515,13 @@ export function HospitalDetailSheet({
                 </div>
               </div>
 
-              <SheetFooter className="pt-4 border-t border-[#DDE5DF] flex flex-row items-center justify-end gap-2">
+              <SheetFooter className="pt-4 border-t border-[#D3DFE9] flex flex-row items-center justify-end gap-2">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleCancelEdit}
                   disabled={isSubmitting}
-                  className="border-[#DDE5DF] text-[#5C6B63] hover:text-[#14201A]"
+                  className="border-[#D3DFE9] text-[#486581] hover:text-[#102A43]"
                 >
                   <X className="w-4 h-4 mr-1.5" />
                   Cancelar
@@ -524,7 +529,7 @@ export function HospitalDetailSheet({
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm"
+                  className="bg-[#004B8D] hover:bg-[#003666] text-white shadow-sm font-semibold"
                 >
                   {isSubmitting ? (
                     <>
@@ -543,61 +548,65 @@ export function HospitalDetailSheet({
           ) : (
             <div className="p-6 space-y-6 flex-1">
               {/* Section 1: Dados Cadastrais */}
-              <div className="bg-[#F4F7F4]/60 rounded-xl p-5 border border-[#DDE5DF]">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#0B6E4F] mb-4 flex items-center gap-1.5">
-                  <FileText className="w-4 h-4" />
+              <div className="bg-[#F4F6F9] rounded-xl p-5 border border-[#D3DFE9]">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] mb-4 flex items-center gap-1.5">
+                  <FileText className="w-4 h-4 text-[#004B8D]" />
                   Dados do Estabelecimento
                 </h4>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-xs text-[#5C6B63] block mb-0.5">Nome Oficial</span>
-                    <span className="font-semibold text-[#14201A] block">{hospital.nome}</span>
+                    <span className="text-xs text-[#486581] block mb-0.5 font-medium">
+                      Nome Oficial
+                    </span>
+                    <span className="font-semibold text-[#102A43] block">{hospital.nome}</span>
                   </div>
 
                   <div>
-                    <span className="text-xs text-[#5C6B63] block mb-0.5">Tipo de Unidade</span>
-                    <span className="font-medium text-[#14201A] block">
+                    <span className="text-xs text-[#486581] block mb-0.5 font-medium">
+                      Tipo de Unidade
+                    </span>
+                    <span className="font-semibold text-[#102A43] block">
                       {hospital.tipo || (
-                        <span className="text-[#8E9D94] italic">Não informado</span>
+                        <span className="text-[#829AB1] italic font-normal">Não informado</span>
                       )}
                     </span>
                   </div>
 
                   <div>
-                    <span className="text-xs text-[#5C6B63] block mb-0.5 flex items-center gap-1">
-                      <Hash className="w-3 h-3 text-[#0B6E4F]" />
+                    <span className="text-xs text-[#486581] block mb-0.5 font-medium flex items-center gap-1">
+                      <Hash className="w-3 h-3 text-[#E5A812]" />
                       Código CNES
                     </span>
-                    <span className="font-mono font-semibold text-[#14201A] block bg-white px-2 py-1 rounded border border-[#DDE5DF] w-fit">
+                    <span className="font-mono font-bold text-[#004B8D] block bg-white px-2 py-1 rounded border border-[#D3DFE9] w-fit">
                       {hospital.cnes}
                     </span>
                   </div>
 
                   <div>
-                    <span className="text-xs text-[#5C6B63] block mb-0.5 flex items-center gap-1">
-                      <CreditCard className="w-3 h-3 text-[#0B6E4F]" />
+                    <span className="text-xs text-[#486581] block mb-0.5 font-medium flex items-center gap-1">
+                      <CreditCard className="w-3 h-3 text-[#004B8D]" />
                       CNPJ
                     </span>
-                    <span className="font-mono font-medium text-[#14201A] block">
+                    <span className="font-mono font-semibold text-[#102A43] block">
                       {hospital.cnpj ? (
                         formatCNPJ(hospital.cnpj)
                       ) : (
-                        <span className="text-[#8E9D94] italic">Não informado</span>
+                        <span className="text-[#829AB1] italic font-normal">Não informado</span>
                       )}
                     </span>
                   </div>
 
                   <div className="sm:col-span-2">
-                    <span className="text-xs text-[#5C6B63] block mb-0.5 flex items-center gap-1">
-                      <Building className="w-3 h-3 text-[#0B6E4F]" />
+                    <span className="text-xs text-[#486581] block mb-0.5 font-medium flex items-center gap-1">
+                      <Building className="w-3 h-3 text-[#004B8D]" />
                       CNPJ da Mantenedora
                     </span>
-                    <span className="font-mono font-medium text-[#14201A] block">
+                    <span className="font-mono font-semibold text-[#102A43] block">
                       {hospital.cnpj_mantenedora ? (
                         formatCNPJ(hospital.cnpj_mantenedora)
                       ) : (
-                        <span className="text-[#8E9D94] italic">Não informado</span>
+                        <span className="text-[#829AB1] italic font-normal">Não informado</span>
                       )}
                     </span>
                   </div>
@@ -605,23 +614,27 @@ export function HospitalDetailSheet({
               </div>
 
               {/* Section 2: Localização */}
-              <div className="bg-[#F4F7F4]/60 rounded-xl p-5 border border-[#DDE5DF]">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#0B6E4F] mb-4 flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4" />
+              <div className="bg-[#F4F6F9] rounded-xl p-5 border border-[#D3DFE9]">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] mb-4 flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4 text-[#004B8D]" />
                   Localização e Município
                 </h4>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-xs text-[#5C6B63] block mb-0.5">Município / UF</span>
-                    <span className="font-semibold text-[#14201A] block">{hospital.municipio}</span>
+                    <span className="text-xs text-[#486581] block mb-0.5 font-medium">
+                      Município / UF
+                    </span>
+                    <span className="font-semibold text-[#102A43] block">{hospital.municipio}</span>
                   </div>
 
                   <div className="sm:col-span-2">
-                    <span className="text-xs text-[#5C6B63] block mb-0.5">Endereço Completo</span>
-                    <span className="font-medium text-[#14201A] block leading-relaxed">
+                    <span className="text-xs text-[#486581] block mb-0.5 font-medium">
+                      Endereço Completo
+                    </span>
+                    <span className="font-medium text-[#102A43] block leading-relaxed">
                       {hospital.endereco || (
-                        <span className="text-[#8E9D94] italic">Não informado</span>
+                        <span className="text-[#829AB1] italic font-normal">Não informado</span>
                       )}
                     </span>
                   </div>
@@ -629,29 +642,33 @@ export function HospitalDetailSheet({
               </div>
 
               {/* Section 3: Responsável */}
-              <div className="bg-[#F4F7F4]/60 rounded-xl p-5 border border-[#DDE5DF]">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#0B6E4F] mb-4 flex items-center gap-1.5">
-                  <User className="w-4 h-4" />
+              <div className="bg-[#F4F6F9] rounded-xl p-5 border border-[#D3DFE9]">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#004B8D] mb-4 flex items-center gap-1.5">
+                  <User className="w-4 h-4 text-[#004B8D]" />
                   Responsável pelas Informações
                 </h4>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-xs text-[#5C6B63] block mb-0.5">Nome do Responsável</span>
-                    <span className="font-semibold text-[#14201A] block">
+                    <span className="text-xs text-[#486581] block mb-0.5 font-medium">
+                      Nome do Responsável
+                    </span>
+                    <span className="font-semibold text-[#102A43] block">
                       {hospital.responsavel || (
-                        <span className="text-[#8E9D94] italic">Não informado</span>
+                        <span className="text-[#829AB1] italic font-normal">Não informado</span>
                       )}
                     </span>
                   </div>
 
                   <div>
-                    <span className="text-xs text-[#5C6B63] block mb-0.5">CPF do Responsável</span>
-                    <span className="font-mono font-medium text-[#14201A] block">
+                    <span className="text-xs text-[#486581] block mb-0.5 font-medium">
+                      CPF do Responsável
+                    </span>
+                    <span className="font-mono font-semibold text-[#102A43] block">
                       {hospital.cpf_responsavel ? (
                         formatCPF(hospital.cpf_responsavel)
                       ) : (
-                        <span className="text-[#8E9D94] italic">Não informado</span>
+                        <span className="text-[#829AB1] italic font-normal">Não informado</span>
                       )}
                     </span>
                   </div>
@@ -660,21 +677,21 @@ export function HospitalDetailSheet({
 
               {/* Section 4: Ações Rápidas de Vistoria e Exclusão */}
               <div className="pt-2 flex flex-col gap-3">
-                <div className="bg-[#E6F4EE]/60 border border-[#0B6E4F]/20 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="bg-[#E8F1F8] border border-[#004B8D]/20 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div className="space-y-0.5">
-                    <p className="text-sm font-bold text-[#14201A] flex items-center gap-1.5">
-                      <ClipboardCheck className="w-4 h-4 text-[#0B6E4F]" />
-                      Checklist Técnico de Vistoria
+                    <p className="text-sm font-bold text-[#004B8D] flex items-center gap-1.5">
+                      <ClipboardCheck className="w-4 h-4 text-[#004B8D]" />
+                      Checklist Técnico de Vistoria CREA-PI
                     </p>
-                    <p className="text-xs text-[#5C6B63]">
-                      Preencha ou visualize a conformidade de engenharia e segurança deste hospital.
+                    <p className="text-xs text-[#486581]">
+                      Preencha ou visualize a conformidade técnica, ARTs e segurança deste hospital.
                     </p>
                   </div>
                   <Button
                     type="button"
                     onClick={handleIniciarVistoria}
                     disabled={isStartingVistoria}
-                    className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold shrink-0 text-xs h-9 px-3.5"
+                    className="bg-[#004B8D] hover:bg-[#003666] text-white shadow-sm font-semibold shrink-0 text-xs h-9 px-3.5"
                   >
                     {isStartingVistoria ? (
                       <Loader2 className="w-4 h-4 animate-spin mr-1.5" />
@@ -687,7 +704,7 @@ export function HospitalDetailSheet({
 
                 {onDelete && (
                   <div className="pt-2 flex justify-between items-center">
-                    <span className="text-xs text-[#5C6B63]">
+                    <span className="text-xs text-[#486581]">
                       Cadastrado em {new Date(hospital.created).toLocaleDateString('pt-BR')}
                     </span>
                     <Button
@@ -710,18 +727,18 @@ export function HospitalDetailSheet({
 
       {/* Confirmation Dialog for Deletion */}
       <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
-        <AlertDialogContent className="border-[#DDE5DF] bg-white">
+        <AlertDialogContent className="border-[#D3DFE9] bg-white">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-lg font-bold text-[#14201A]">
+            <AlertDialogTitle className="text-lg font-bold text-[#102A43]">
               Excluir Hospital
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-sm text-[#5C6B63]">
+            <AlertDialogDescription className="text-sm text-[#486581]">
               Tem certeza que deseja excluir &ldquo;{hospital.nome}&rdquo;? Esta ação removerá os
               dados cadastrais permanentemente.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting} className="border-[#DDE5DF] text-[#5C6B63]">
+            <AlertDialogCancel disabled={isDeleting} className="border-[#D3DFE9] text-[#486581]">
               Cancelar
             </AlertDialogCancel>
             <AlertDialogAction

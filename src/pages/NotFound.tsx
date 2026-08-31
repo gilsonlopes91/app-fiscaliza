@@ -10,19 +10,19 @@ const NotFound = () => {
   }, [location.pathname])
 
   useEffect(() => {
-    document.title = 'Página não encontrada · Fiscalização'
+    document.title = 'Página não encontrada · CREA-PI Fiscalização'
   }, [])
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F4F7F4] text-[#14201A] px-4 font-sans">
-      <div className="text-center max-w-md bg-white p-8 rounded-xl border border-[#DDE5DF] shadow-sm">
-        <h1 className="text-5xl font-bold text-[#0B6E4F] mb-3">404</h1>
-        <p className="text-lg text-[#5C6B63] mb-6">Página não encontrada</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#F4F6F9] text-[#102A43] px-4 font-sans">
+      <div className="text-center max-w-md bg-white p-8 rounded-xl border border-[#D3DFE9] shadow-sm">
+        <h1 className="text-5xl font-bold text-[#004B8D] mb-3">404</h1>
+        <p className="text-lg text-[#486581] mb-6">Página não encontrada</p>
         <a
-          href="/hospitais"
-          className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-[#0B6E4F] hover:bg-[#095A41] text-white font-semibold text-sm transition-colors"
+          href="/"
+          className="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-[#004B8D] hover:bg-[#003666] rounded-lg transition-colors shadow-sm"
         >
-          Ir para Hospitais
+          Voltar para o início
         </a>
       </div>
     </div>

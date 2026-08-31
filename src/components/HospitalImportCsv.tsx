@@ -528,19 +528,19 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
   return (
     <div className="space-y-6">
       {/* Introduction Card */}
-      <div className="bg-white rounded-xl border border-[#DDE5DF] p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+      <div className="bg-white rounded-xl border border-[#D3DFE9] p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#E6F4EE] flex items-center justify-center text-[#0B6E4F]">
+              <div className="w-8 h-8 rounded-lg bg-[#E8F1F8] flex items-center justify-center text-[#004B8D]">
                 <FileSpreadsheet className="w-4 h-4" />
               </div>
-              <h2 className="text-lg font-bold text-[#14201A]">Importação em Lote via CSV</h2>
+              <h2 className="text-lg font-bold text-[#102A43]">Importação em Lote via CSV</h2>
             </div>
-            <p className="text-sm text-[#5C6B63] max-w-2xl leading-relaxed">
-              Carregue uma planilha CSV com a relação de hospitais. O sistema faz a pré-visualização
-              completa, compara o <strong>CNES</strong> com os registros existentes e indica quais
-              unidades serão criadas ou atualizadas antes de gravar.
+            <p className="text-sm text-[#486581] max-w-2xl leading-relaxed">
+              Carregue uma planilha CSV com a relação de hospitais. O sistema do CREA-PI faz a
+              pré-visualização completa, compara o <strong>CNES</strong> com os registros existentes
+              e indica quais unidades serão criadas ou atualizadas antes de gravar.
             </p>
           </div>
 
@@ -548,35 +548,35 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
             type="button"
             variant="outline"
             onClick={handleDownloadTemplate}
-            className="border-[#DDE5DF] hover:bg-[#E6F4EE] hover:text-[#0B6E4F] text-[#14201A] text-xs font-semibold shrink-0 h-9"
+            className="border-[#D3DFE9] hover:bg-[#E8F1F8] hover:text-[#004B8D] text-[#102A43] text-xs font-semibold shrink-0 h-9"
           >
-            <FileDown className="w-3.5 h-3.5 mr-1.5 text-[#0B6E4F]" />
+            <FileDown className="w-3.5 h-3.5 mr-1.5 text-[#004B8D]" />
             Baixar modelo CSV
           </Button>
         </div>
 
         {/* Expected format requirements pill box */}
-        <div className="mt-4 pt-4 border-t border-[#DDE5DF]/70 text-xs text-[#5C6B63] grid grid-cols-1 md:grid-cols-2 gap-3 bg-[#F4F7F4]/60 p-3.5 rounded-lg">
+        <div className="mt-4 pt-4 border-t border-[#D3DFE9]/70 text-xs text-[#486581] grid grid-cols-1 md:grid-cols-2 gap-3 bg-[#F4F6F9] p-3.5 rounded-lg">
           <div>
-            <span className="font-semibold text-[#14201A] block mb-1">
+            <span className="font-semibold text-[#102A43] block mb-1">
               Colunas obrigatórias no cabeçalho:
             </span>
-            <code className="text-[#0B6E4F] bg-white px-2 py-0.5 rounded border border-[#DDE5DF] inline-block font-mono text-[11px]">
+            <code className="text-[#004B8D] bg-white px-2 py-0.5 rounded border border-[#D3DFE9] inline-block font-mono text-[11px] font-semibold">
               nome, municipio, cnes, cnpj, cnpj_mantenedora, tipo
             </code>
           </div>
           <div>
-            <span className="font-semibold text-[#14201A] block mb-1">
+            <span className="font-semibold text-[#102A43] block mb-1">
               Valores permitidos para a coluna tipo:
             </span>
-            <span className="text-[#3A4B43]">
-              <code className="bg-white px-1.5 py-0.5 rounded border border-[#DDE5DF] text-[11px] font-mono mr-1">
+            <span className="text-[#243B53]">
+              <code className="bg-white px-1.5 py-0.5 rounded border border-[#D3DFE9] text-[11px] font-mono mr-1">
                 Hospital Geral
               </code>
-              <code className="bg-white px-1.5 py-0.5 rounded border border-[#DDE5DF] text-[11px] font-mono mr-1">
+              <code className="bg-white px-1.5 py-0.5 rounded border border-[#D3DFE9] text-[11px] font-mono mr-1">
                 Hospital Especializado
               </code>
-              <code className="bg-white px-1.5 py-0.5 rounded border border-[#DDE5DF] text-[11px] font-mono">
+              <code className="bg-white px-1.5 py-0.5 rounded border border-[#D3DFE9] text-[11px] font-mono">
                 Hospital-Dia
               </code>
             </span>
@@ -586,41 +586,41 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
 
       {/* Success Summary Banner if import finished */}
       {importResult && (
-        <div className="bg-[#E6F4EE] border border-[#0B6E4F]/30 rounded-xl p-6 shadow-sm animate-fadeIn">
+        <div className="bg-[#E8F1F8] border border-[#004B8D]/30 rounded-xl p-6 shadow-sm animate-fadeIn">
           <div className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-full bg-[#0B6E4F] text-white flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+            <div className="w-10 h-10 rounded-full bg-[#004B8D] text-white flex items-center justify-center shrink-0 shadow-sm mt-0.5">
               <CheckCircle2 className="w-6 h-6 stroke-[2.2]" />
             </div>
             <div className="flex-1 space-y-2">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <h3 className="text-base font-bold text-[#0B6E4F]">
+                <h3 className="text-base font-bold text-[#004B8D]">
                   Importação concluída com sucesso!
                 </h3>
                 <Button
                   size="sm"
                   variant="outline"
                   onClick={handleReset}
-                  className="border-[#0B6E4F]/40 text-[#0B6E4F] bg-white hover:bg-[#0B6E4F] hover:text-white h-8 text-xs font-semibold"
+                  className="border-[#004B8D]/40 text-[#004B8D] bg-white hover:bg-[#004B8D] hover:text-white h-8 text-xs font-semibold"
                 >
                   Importar outro arquivo
                 </Button>
               </div>
 
-              <p className="text-sm text-[#14201A]">
+              <p className="text-sm text-[#102A43]">
                 O processamento do arquivo foi finalizado. Veja os resultados:
               </p>
 
               {/* Stats badges */}
               <div className="flex flex-wrap gap-2.5 pt-1">
-                <div className="bg-white px-3 py-1.5 rounded-lg border border-[#0B6E4F]/20 flex items-center gap-2">
-                  <span className="text-xs text-[#5C6B63]">Novos cadastrados:</span>
-                  <Badge className="bg-[#0B6E4F] text-white font-bold text-xs px-2 py-0.5">
+                <div className="bg-white px-3 py-1.5 rounded-lg border border-[#004B8D]/20 flex items-center gap-2">
+                  <span className="text-xs text-[#486581]">Novos cadastrados:</span>
+                  <Badge className="bg-[#004B8D] text-white font-bold text-xs px-2 py-0.5">
                     +{importResult.createdCount} criados
                   </Badge>
                 </div>
-                <div className="bg-white px-3 py-1.5 rounded-lg border border-[#0B6E4F]/20 flex items-center gap-2">
-                  <span className="text-xs text-[#5C6B63]">Hospitais atualizados:</span>
-                  <Badge className="bg-[#2E6F9E] text-white font-bold text-xs px-2 py-0.5">
+                <div className="bg-white px-3 py-1.5 rounded-lg border border-[#004B8D]/20 flex items-center gap-2">
+                  <span className="text-xs text-[#486581]">Hospitais atualizados:</span>
+                  <Badge className="bg-[#E5A812] text-[#102A43] font-bold text-xs px-2 py-0.5">
                     {importResult.updatedCount} atualizados
                   </Badge>
                 </div>
@@ -649,8 +649,8 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
             border-2 border-dashed rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all duration-200
             ${
               isDragging
-                ? 'border-[#0B6E4F] bg-[#E6F4EE]/60 scale-[0.99]'
-                : 'border-[#DDE5DF] hover:border-[#0B6E4F]/60 bg-white hover:bg-[#F4F7F4]/50'
+                ? 'border-[#004B8D] bg-[#E8F1F8] scale-[0.99]'
+                : 'border-[#D3DFE9] hover:border-[#004B8D]/80 bg-white hover:bg-[#F4F6F9]/70'
             }
           `}
         >
@@ -666,21 +666,21 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
             className="hidden"
           />
 
-          <div className="w-16 h-16 rounded-full bg-[#E6F4EE] flex items-center justify-center text-[#0B6E4F] mx-auto mb-4 shadow-sm">
+          <div className="w-16 h-16 rounded-full bg-[#E8F1F8] flex items-center justify-center text-[#004B8D] mx-auto mb-4 shadow-sm">
             <UploadCloud className="w-8 h-8 stroke-[1.8]" />
           </div>
 
-          <h3 className="text-base font-bold text-[#14201A] mb-1">
+          <h3 className="text-base font-bold text-[#102A43] mb-1">
             Clique para selecionar ou arraste o arquivo CSV até aqui
           </h3>
-          <p className="text-xs text-[#5C6B63] max-w-md mx-auto mb-5">
+          <p className="text-xs text-[#486581] max-w-md mx-auto mb-5">
             Suporta arquivos .csv com separador por vírgula (,) ou ponto-e-vírgula (;) codificados
             em UTF-8.
           </p>
 
           <Button
             type="button"
-            className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold pointer-events-none"
+            className="bg-[#004B8D] hover:bg-[#003666] text-white shadow-sm font-semibold pointer-events-none"
           >
             <FileSpreadsheet className="w-4 h-4 mr-1.5" />
             Selecionar arquivo CSV
@@ -711,18 +711,18 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
       {parsedRows.length > 0 && !importResult && (
         <div className="space-y-4">
           {/* Action and Metrics Summary Header */}
-          <div className="bg-white rounded-xl border border-[#DDE5DF] p-4 sm:p-5 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+          <div className="bg-white rounded-xl border border-[#D3DFE9] p-4 sm:p-5 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-sm sm:text-base text-[#14201A]">
+                  <span className="font-bold text-sm sm:text-base text-[#102A43]">
                     Pré-visualização do arquivo:
                   </span>
-                  <span className="text-xs font-mono font-semibold text-[#0B6E4F] bg-[#E6F4EE] px-2.5 py-1 rounded-md border border-[#0B6E4F]/20">
+                  <span className="text-xs font-mono font-semibold text-[#004B8D] bg-[#E8F1F8] px-2.5 py-1 rounded-md border border-[#004B8D]/20">
                     {fileName}
                   </span>
                   {fileSize && (
-                    <span className="text-xs text-[#5C6B63]">
+                    <span className="text-xs text-[#486581]">
                       ({(fileSize / 1024).toFixed(1)} KB)
                     </span>
                   )}
@@ -730,14 +730,14 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
 
                 {/* Badge counters */}
                 <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-                  <span className="text-[#5C6B63]">
+                  <span className="text-[#486581]">
                     Total no arquivo: <strong>{counts.total}</strong> linhas
                   </span>
-                  <span className="text-[#DDE5DF]">•</span>
-                  <Badge className="bg-[#0B6E4F] text-white hover:bg-[#0B6E4F] text-[11px] font-semibold">
+                  <span className="text-[#D3DFE9]">•</span>
+                  <Badge className="bg-[#004B8D] text-white hover:bg-[#004B8D] text-[11px] font-semibold">
                     {counts.newCount} novos hospitais
                   </Badge>
-                  <Badge className="bg-[#2E6F9E] text-white hover:bg-[#2E6F9E] text-[11px] font-semibold">
+                  <Badge className="bg-[#E5A812] text-[#102A43] hover:bg-[#E5A812] text-[11px] font-semibold">
                     {counts.updateCount} existentes (atualização)
                   </Badge>
                   {counts.invalidCount > 0 && (
@@ -754,7 +754,7 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
                   variant="outline"
                   onClick={handleReset}
                   disabled={isImporting}
-                  className="border-[#DDE5DF] text-[#5C6B63] hover:text-red-700 hover:bg-red-50 text-xs font-semibold h-10"
+                  className="border-[#D3DFE9] text-[#486581] hover:text-red-700 hover:bg-red-50 text-xs font-semibold h-10"
                 >
                   <Trash2 className="w-3.5 h-3.5 mr-1.5" />
                   Descartar
@@ -763,7 +763,7 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
                 <Button
                   onClick={handleConfirmImport}
                   disabled={isImporting || counts.validTotal === 0}
-                  className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold h-10 px-5 text-sm cursor-pointer"
+                  className="bg-[#004B8D] hover:bg-[#003666] text-white shadow-sm font-semibold h-10 px-5 text-sm cursor-pointer"
                 >
                   {isImporting ? (
                     <>
@@ -781,44 +781,44 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
             </div>
 
             {/* Explanatory banner: nothing saved yet */}
-            <div className="mt-4 pt-3 border-t border-[#DDE5DF] flex items-center gap-2 text-xs text-[#5C6B63]">
-              <Info className="w-4 h-4 text-[#0B6E4F] shrink-0" />
+            <div className="mt-4 pt-3 border-t border-[#D3DFE9] flex items-center gap-2 text-xs text-[#486581]">
+              <Info className="w-4 h-4 text-[#004B8D] shrink-0" />
               <span>
                 <strong>Atenção:</strong> Nada foi salvo ainda. Revise a tabela de pré-visualização
                 abaixo e clique em <strong>"Confirmar importação"</strong> para gravar as alterações
-                no banco de dados.
+                no banco de dados do CREA-PI.
               </span>
             </div>
           </div>
 
           {/* Table of Parsed Rows */}
-          <div className="bg-white rounded-xl border border-[#DDE5DF] shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden">
+          <div className="bg-white rounded-xl border border-[#D3DFE9] shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden">
             <div className="overflow-x-auto max-h-[520px]">
               <Table>
-                <TableHeader className="bg-[#F4F7F4] sticky top-0 z-10">
-                  <TableRow className="border-b border-[#DDE5DF]">
-                    <TableHead className="w-12 text-center text-[11px] font-bold text-[#5C6B63]">
+                <TableHeader className="bg-[#F4F6F9] sticky top-0 z-10">
+                  <TableRow className="border-b border-[#D3DFE9]">
+                    <TableHead className="w-12 text-center text-[11px] font-bold text-[#486581]">
                       #
                     </TableHead>
-                    <TableHead className="text-[11px] font-bold text-[#5C6B63] min-w-[160px]">
+                    <TableHead className="text-[11px] font-bold text-[#486581] min-w-[160px]">
                       Ação prevista
                     </TableHead>
-                    <TableHead className="text-[11px] font-bold text-[#5C6B63] min-w-[200px]">
+                    <TableHead className="text-[11px] font-bold text-[#486581] min-w-[200px]">
                       Nome do hospital
                     </TableHead>
-                    <TableHead className="text-[11px] font-bold text-[#5C6B63] min-w-[140px]">
+                    <TableHead className="text-[11px] font-bold text-[#486581] min-w-[140px]">
                       Município
                     </TableHead>
-                    <TableHead className="text-[11px] font-bold text-[#5C6B63] min-w-[100px]">
+                    <TableHead className="text-[11px] font-bold text-[#486581] min-w-[100px]">
                       CNES
                     </TableHead>
-                    <TableHead className="text-[11px] font-bold text-[#5C6B63] min-w-[130px]">
+                    <TableHead className="text-[11px] font-bold text-[#486581] min-w-[130px]">
                       CNPJ
                     </TableHead>
-                    <TableHead className="text-[11px] font-bold text-[#5C6B63] min-w-[140px]">
+                    <TableHead className="text-[11px] font-bold text-[#486581] min-w-[140px]">
                       CNPJ Mantenedora
                     </TableHead>
-                    <TableHead className="text-[11px] font-bold text-[#5C6B63] min-w-[130px]">
+                    <TableHead className="text-[11px] font-bold text-[#486581] min-w-[130px]">
                       Tipo
                     </TableHead>
                   </TableRow>
@@ -833,26 +833,26 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
                       <TableRow
                         key={row.rowNumber}
                         className={`
-                          border-b border-[#DDE5DF]/80 text-xs transition-colors
+                          border-b border-[#D3DFE9]/80 text-xs transition-colors
                           ${
                             isInvalid
                               ? 'bg-red-50/70 hover:bg-red-50'
                               : isUpdate
-                                ? 'bg-blue-50/40 hover:bg-blue-50/70'
-                                : 'hover:bg-[#F4F7F4]/60'
+                                ? 'bg-amber-50/50 hover:bg-amber-50/80'
+                                : 'hover:bg-[#F4F6F9]/80'
                           }
                         `}
                       >
                         {/* Row Number */}
-                        <TableCell className="text-center font-mono text-[11px] text-[#5C6B63]">
+                        <TableCell className="text-center font-mono text-[11px] text-[#486581]">
                           {row.rowNumber}
                         </TableCell>
 
                         {/* Status / Planned Action Badge */}
                         <TableCell>
                           {isNew && (
-                            <Badge className="bg-[#E6F4EE] text-[#0B6E4F] border border-[#0B6E4F]/30 hover:bg-[#E6F4EE] font-semibold text-[11px] flex items-center gap-1 w-fit">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#0B6E4F]" />
+                            <Badge className="bg-[#E8F1F8] text-[#004B8D] border border-[#004B8D]/30 hover:bg-[#E8F1F8] font-semibold text-[11px] flex items-center gap-1 w-fit">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#004B8D]" />
                               Novo hospital
                             </Badge>
                           )}
@@ -861,12 +861,12 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <Badge className="bg-[#E8F1F8] text-[#1E5F8A] border border-[#1E5F8A]/30 hover:bg-[#E8F1F8] font-semibold text-[11px] flex items-center gap-1 w-fit cursor-help">
-                                    <RefreshCw className="w-2.5 h-2.5" />
+                                  <Badge className="bg-[#FFF8E6] text-[#8C6200] border border-[#E5A812]/40 hover:bg-[#FFF8E6] font-semibold text-[11px] flex items-center gap-1 w-fit cursor-help">
+                                    <RefreshCw className="w-2.5 h-2.5 text-[#C88F06]" />
                                     Já existe — será atualizado
                                   </Badge>
                                 </TooltipTrigger>
-                                <TooltipContent className="text-xs bg-[#14201A] text-white max-w-xs">
+                                <TooltipContent className="text-xs bg-[#102A43] text-white max-w-xs">
                                   CNES já cadastrado para: &ldquo;
                                   {row.existingHospitalName}&rdquo;. Os dados do cadastro serão
                                   sobrescritos com as informações desta linha.
@@ -900,27 +900,27 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
                         </TableCell>
 
                         {/* Nome */}
-                        <TableCell className="font-semibold text-[#14201A]">
+                        <TableCell className="font-semibold text-[#102A43]">
                           {row.nome || <span className="text-red-500 italic">Vazio</span>}
                         </TableCell>
 
                         {/* Município */}
-                        <TableCell className="text-[#3A4B43]">
+                        <TableCell className="text-[#334E68] font-medium">
                           {row.municipio || <span className="text-red-500 italic">Vazio</span>}
                         </TableCell>
 
                         {/* CNES */}
-                        <TableCell className="font-mono text-[#14201A]">
+                        <TableCell className="font-mono font-bold text-[#004B8D]">
                           {row.cnes || <span className="text-red-500 italic">Vazio</span>}
                         </TableCell>
 
                         {/* CNPJ */}
-                        <TableCell className="font-mono text-[#5C6B63]">
+                        <TableCell className="font-mono text-[#486581]">
                           {row.cnpj ? formatCNPJ(row.cnpj) : '—'}
                         </TableCell>
 
                         {/* CNPJ Mantenedora */}
-                        <TableCell className="font-mono text-[#5C6B63]">
+                        <TableCell className="font-mono text-[#486581]">
                           {row.cnpj_mantenedora ? formatCNPJ(row.cnpj_mantenedora) : '—'}
                         </TableCell>
 
@@ -929,7 +929,7 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
                           {row.tipo ? (
                             <Badge
                               variant="outline"
-                              className="bg-white border-[#DDE5DF] text-[#14201A] font-normal text-[11px]"
+                              className="bg-white border-[#D3DFE9] text-[#102A43] font-medium text-[11px]"
                             >
                               {row.tipo}
                             </Badge>
@@ -938,7 +938,7 @@ export function HospitalImportCsv({ existingHospitais, onImportComplete }: Hospi
                               {row.rawTipo} (inválido)
                             </span>
                           ) : (
-                            <span className="text-[#8E9D94] text-[11px]">Não inf.</span>
+                            <span className="text-[#829AB1] text-[11px]">Não inf.</span>
                           )}
                         </TableCell>
                       </TableRow>

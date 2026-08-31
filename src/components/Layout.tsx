@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useId } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { ShieldCheck, Building2, ClipboardCheck } from 'lucide-react'
+import { Building2, ClipboardCheck } from 'lucide-react'
+import logoCreaPi from '@/assets/logocreapiazul-919d6.png'
 
 interface TabItem {
   id: string
@@ -87,43 +88,62 @@ export default function Layout() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F7F4] text-[#14201A] flex flex-col font-sans selection:bg-[#E6F4EE] selection:text-[#0B6E4F]">
+    <div className="min-h-screen bg-[#F4F6F9] text-[#102A43] flex flex-col font-sans selection:bg-[#E8F1F8] selection:text-[#004B8D]">
       {/* Fixed Header & Navigation Container */}
-      <div className="fixed top-0 left-0 right-0 z-40 bg-[#FFFFFF]">
-        {/* Top Header */}
+      <div className="fixed top-0 left-0 right-0 z-40 bg-[#004B8D] shadow-md">
+        {/* Top Header with official CREA-PI branding */}
         <header
           role="banner"
-          className="h-14 sm:h-16 border-b border-[#DDE5DF] bg-[#FFFFFF] px-5 sm:px-8"
+          className="h-16 sm:h-20 bg-[#004B8D] border-b border-[#003666] px-5 sm:px-8"
         >
-          <div className="max-w-[1100px] h-full mx-auto flex items-center">
-            <div className="flex items-center gap-3">
-              {/* Brand Shield Icon */}
-              <div
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#0B6E4F] flex items-center justify-center text-white shadow-sm shrink-0"
-                aria-hidden="true"
-              >
-                <ShieldCheck className="w-5 h-5 sm:w-5 sm:h-5 stroke-[2.2]" />
+          <div className="max-w-[1100px] h-full mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-3 sm:gap-4">
+              {/* CREA-PI Official Logo */}
+              <div className="flex items-center gap-2 sm:gap-3 py-1">
+                <img
+                  src={logoCreaPi}
+                  alt="CREA-PI - Conselho Regional de Engenharia e Agronomia do Piauí"
+                  className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm brightness-105"
+                />
+                <div className="h-8 w-px bg-white/25 hidden sm:block mx-1" aria-hidden="true" />
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[17px] sm:text-[19px] font-bold text-white tracking-tight leading-tight select-none">
+                      Fiscalização
+                    </span>
+                    <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider bg-[#E5A812] text-[#102A43] px-1.5 py-0.5 rounded shadow-sm">
+                      Hospitalar
+                    </span>
+                  </div>
+                  <span className="text-[11px] sm:text-[12px] text-blue-100 hidden sm:block leading-tight font-medium opacity-90">
+                    Sistema de Vistoria e Conformidade Técnica
+                  </span>
+                </div>
               </div>
-              {/* App Name */}
-              <span className="text-[18px] sm:text-[20px] font-bold text-[#14201A] tracking-[-0.01em] select-none">
-                Fiscalização
-              </span>
+            </div>
+
+            {/* Right side info badge */}
+            <div className="hidden md:flex items-center gap-2 text-white/90 text-xs bg-[#003666]/70 px-3 py-1.5 rounded-lg border border-white/10">
+              <span className="w-2 h-2 rounded-full bg-[#E5A812] animate-pulse" />
+              <span className="font-medium text-white">Divisão de Fiscalização</span>
+              <span className="text-blue-200">•</span>
+              <span className="text-blue-200">CREA-PI</span>
             </div>
           </div>
         </header>
 
-        {/* Tab Bar */}
+        {/* Tab Bar - Clean white / light slate navigation with active blue underline */}
         <nav
           role="navigation"
           aria-label="Navegação principal"
-          className="h-[50px] sm:h-[52px] border-b border-[#DDE5DF] bg-[#FFFFFF] px-5 sm:px-8"
+          className="h-[50px] sm:h-[52px] border-b border-[#D3DFE9] bg-white px-5 sm:px-8 shadow-sm"
         >
           <div className="max-w-[1100px] h-full mx-auto flex items-stretch">
             <div
               ref={tabListRef}
               role="tablist"
               aria-orientation="horizontal"
-              className="relative flex items-stretch w-full sm:w-auto gap-0 sm:gap-1"
+              className="relative flex items-stretch w-full sm:w-auto gap-1 sm:gap-2"
             >
               {TABS.map((tab, idx) => {
                 const isActive = idx === safeActiveIndex
@@ -144,20 +164,20 @@ export default function Layout() {
                     onClick={() => navigate(tab.path)}
                     onKeyDown={(e) => handleKeyDown(e, idx)}
                     className={`
-                      relative flex items-center justify-center gap-2 font-semibold text-[15px]
-                      px-3 sm:px-[18px] py-0 transition-colors duration-150 rounded-t-md outline-none
+                      relative flex items-center justify-center gap-2 font-bold text-[14px] sm:text-[15px]
+                      px-4 sm:px-6 py-0 transition-all duration-150 rounded-t-md outline-none
                       min-h-[48px] sm:min-h-[50px] flex-1 sm:flex-initial cursor-pointer select-none
-                      focus-visible:ring-2 focus-visible:ring-[#0B6E4F]/40 focus-visible:ring-offset-2
+                      focus-visible:ring-2 focus-visible:ring-[#004B8D]/40 focus-visible:ring-offset-2
                       ${
                         isActive
-                          ? 'text-[#0B6E4F]'
-                          : 'text-[#5C6B63] hover:text-[#0B6E4F] hover:bg-[#E6F4EE]/70'
+                          ? 'text-[#004B8D] bg-gradient-to-b from-[#E8F1F8]/50 to-white'
+                          : 'text-[#486581] hover:text-[#004B8D] hover:bg-[#E8F1F8]/60'
                       }
                     `}
                   >
                     <IconComponent
                       className={`w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0 transition-colors duration-150 ${
-                        isActive ? 'text-[#0B6E4F]' : 'text-[#5C6B63]'
+                        isActive ? 'text-[#004B8D] stroke-[2.3]' : 'text-[#627D98]'
                       }`}
                       aria-hidden="true"
                     />
@@ -166,9 +186,9 @@ export default function Layout() {
                 )
               })}
 
-              {/* Sliding Bottom Active Indicator */}
+              {/* Sliding Bottom Active Indicator with CREA-PI deep blue and amber accent */}
               <div
-                className="absolute bottom-0 h-[3px] bg-[#0B6E4F] rounded-full pointer-events-none transition-all duration-250 ease-out"
+                className="absolute bottom-0 h-[3.5px] bg-[#004B8D] rounded-t-full pointer-events-none transition-all duration-250 ease-out"
                 style={{
                   left: `${indicatorStyle.left}px`,
                   width: `${indicatorStyle.width}px`,
@@ -182,15 +202,15 @@ export default function Layout() {
       </div>
 
       {/* Main Content Area with Fixed Header + Tab Bar Offset */}
-      {/* 56px (header mobile) + 50px (tab mobile) = 106px */}
-      {/* 64px (header desktop) + 52px (tab desktop) = 116px */}
+      {/* 64px (header mobile) + 50px (tab mobile) = 114px */}
+      {/* 80px (header desktop) + 52px (tab desktop) = 132px */}
       <main
-        className="flex-1 pt-[106px] sm:pt-[116px] pb-12 px-5 sm:px-8"
+        className="flex-1 pt-[120px] sm:pt-[136px] pb-12 px-5 sm:px-8"
         id={`panel-${TABS[safeActiveIndex]?.id || 'main'}`}
         role="region"
         aria-labelledby={`tab-${TABS[safeActiveIndex]?.id || 'hospitais'}-${tabsContainerId}`}
       >
-        <div className="max-w-[1100px] mx-auto pt-7 sm:pt-9">
+        <div className="max-w-[1100px] mx-auto pt-5 sm:pt-7">
           <Outlet />
         </div>
       </main>
