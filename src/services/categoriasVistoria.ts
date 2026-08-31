@@ -18,9 +18,7 @@ export const categoriasVistoriaService = {
       ...record,
       // Normalize periodicidadeDias: null if <= 0 or not provided
       periodicidadeDias:
-        record.periodicidadeDias && record.periodicidadeDias > 0
-          ? record.periodicidadeDias
-          : null,
+        record.periodicidadeDias && record.periodicidadeDias > 0 ? record.periodicidadeDias : null,
     }))
   },
 
@@ -29,9 +27,7 @@ export const categoriasVistoriaService = {
     return {
       ...record,
       periodicidadeDias:
-        record.periodicidadeDias && record.periodicidadeDias > 0
-          ? record.periodicidadeDias
-          : null,
+        record.periodicidadeDias && record.periodicidadeDias > 0 ? record.periodicidadeDias : null,
     }
   },
 }
