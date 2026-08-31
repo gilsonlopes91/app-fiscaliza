@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T18:33:44.044Z",
+  "generatedAt": "2026-08-31T18:38:20.572Z",
   "collections": [
     {
       "name": "users",
@@ -29,14 +29,19 @@
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate"]
+          "autodateTriggers": [
+            "onCreate"
+          ]
         },
         {
           "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate", "onUpdate"]
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
         }
       ],
       "indexes": [
@@ -90,7 +95,11 @@
           "type": "select",
           "required": false,
           "system": false,
-          "selectValues": ["Hospital Geral", "Hospital Especializado", "Hospital-Dia"]
+          "selectValues": [
+            "Hospital Geral",
+            "Hospital Especializado",
+            "Hospital-Dia"
+          ]
         },
         {
           "name": "endereco",
@@ -115,20 +124,78 @@
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate"]
+          "autodateTriggers": [
+            "onCreate"
+          ]
         },
         {
           "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate", "onUpdate"]
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
         }
       ],
       "indexes": [
         "CREATE INDEX idx_hospitais_municipio ON hospitais (municipio)",
         "CREATE INDEX idx_hospitais_cnes ON hospitais (cnes)",
         "CREATE INDEX idx_hospitais_nome ON hospitais (nome)"
+      ]
+    },
+    {
+      "name": "categorias_vistoria",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+      },
+      "fields": [
+        {
+          "name": "nome",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "exigeArt",
+          "type": "bool",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "periodicidadeDias",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate"
+          ]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
+        }
+      ],
+      "indexes": [
+        "CREATE UNIQUE INDEX idx_categorias_vistoria_nome ON categorias_vistoria (nome)"
       ]
     }
   ]
