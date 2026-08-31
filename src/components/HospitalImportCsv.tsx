@@ -25,30 +25,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { hospitaisService, Hospital, HospitalTipo } from '@/services/hospitais'
 import { formatCNPJ } from '@/lib/formatters'
 import { useToast } from '@/hooks/use-toast'
 
-const REQUIRED_HEADERS = [
-  'nome',
-  'municipio',
-  'cnes',
-  'cnpj',
-  'cnpj_mantenedora',
-  'tipo',
-] as const
+const REQUIRED_HEADERS = ['nome', 'municipio', 'cnes', 'cnpj', 'cnpj_mantenedora', 'tipo'] as const
 
-const VALID_TIPOS: HospitalTipo[] = [
-  'Hospital Geral',
-  'Hospital Especializado',
-  'Hospital-Dia',
-]
+const VALID_TIPOS: HospitalTipo[] = ['Hospital Geral', 'Hospital Especializado', 'Hospital-Dia']
 
 export interface ParsedCsvRow {
   rowNumber: number
@@ -147,21 +131,14 @@ function normalizeTipo(rawTipo: string): HospitalTipo | null {
   if (normalized === 'hospital especializado' || normalized === 'especializado') {
     return 'Hospital Especializado'
   }
-  if (
-    normalized === 'hospital dia' ||
-    normalized === 'hospitaldia' ||
-    normalized === 'dia'
-  ) {
+  if (normalized === 'hospital dia' || normalized === 'hospitaldia' || normalized === 'dia') {
     return 'Hospital-Dia'
   }
 
   return null
 }
 
-export function HospitalImportCsv({
-  existingHospitais,
-  onImportComplete,
-}: HospitalImportCsvProps) {
+export function HospitalImportCsv({ existingHospitais, onImportComplete }: HospitalImportCsvProps) {
   const { toast } = useToast()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -223,9 +200,7 @@ export function HospitalImportCsv({
         )
 
         // Check for missing required headers
-        const missingHeaders = REQUIRED_HEADERS.filter(
-          (req) => !rawHeaders.includes(req),
-        )
+        const missingHeaders = REQUIRED_HEADERS.filter((req) => !rawHeaders.includes(req))
 
         if (missingHeaders.length > 0) {
           setFileError(
@@ -271,8 +246,7 @@ export function HospitalImportCsv({
           const municipio = cells[headerIndices.municipio]?.trim() || ''
           const rawCnes = cells[headerIndices.cnes]?.trim() || ''
           const cnpj = cells[headerIndices.cnpj]?.trim() || ''
-          const cnpj_mantenedora =
-            cells[headerIndices.cnpj_mantenedora]?.trim() || ''
+          const cnpj_mantenedora = cells[headerIndices.cnpj_mantenedora]?.trim() || ''
           const rawTipo = cells[headerIndices.tipo]?.trim() || ''
 
           // Validation
@@ -298,9 +272,7 @@ export function HospitalImportCsv({
           if (cleanCnesDigits) {
             if (seenCsvCnes.has(cleanCnesDigits)) {
               const prevRow = seenCsvCnes.get(cleanCnesDigits)
-              rowErrors.push(
-                `CNES duplicado no arquivo (já apareceu na linha ${prevRow}).`,
-              )
+              rowErrors.push(`CNES duplicado no arquivo (já apareceu na linha ${prevRow}).`)
             } else {
               seenCsvCnes.set(cleanCnesDigits, rowNumber)
             }
@@ -327,8 +299,7 @@ export function HospitalImportCsv({
           if (rowErrors.length > 0) {
             status = 'invalid'
           } else {
-            const foundHospital =
-              existingByCnes.get(cleanCnesDigits) || existingByCnes.get(rawCnes)
+            const foundHospital = existingByCnes.get(cleanCnesDigits) || existingByCnes.get(rawCnes)
 
             if (foundHospital) {
               status = 'update'
@@ -356,9 +327,7 @@ export function HospitalImportCsv({
         }
 
         if (rows.length === 0) {
-          setFileError(
-            'Nenhuma linha de dados válida foi encontrada após a leitura do arquivo.',
-          )
+          setFileError('Nenhuma linha de dados válida foi encontrada após a leitura do arquivo.')
         }
 
         setParsedRows(rows)
@@ -566,15 +535,12 @@ export function HospitalImportCsv({
               <div className="w-8 h-8 rounded-lg bg-[#E6F4EE] flex items-center justify-center text-[#0B6E4F]">
                 <FileSpreadsheet className="w-4 h-4" />
               </div>
-              <h2 className="text-lg font-bold text-[#14201A]">
-                Importação em Lote via CSV
-              </h2>
+              <h2 className="text-lg font-bold text-[#14201A]">Importação em Lote via CSV</h2>
             </div>
             <p className="text-sm text-[#5C6B63] max-w-2xl leading-relaxed">
-              Carregue uma planilha CSV com a relação de hospitais. O sistema
-              faz a pré-visualização completa, compara o <strong>CNES</strong> com os
-              registros existentes e indica quais unidades serão criadas ou
-              atualizadas antes de gravar.
+              Carregue uma planilha CSV com a relação de hospitais. O sistema faz a pré-visualização
+              completa, compara o <strong>CNES</strong> com os registros existentes e indica quais
+              unidades serão criadas ou atualizadas antes de gravar.
             </p>
           </div>
 
@@ -708,7 +674,8 @@ export function HospitalImportCsv({
             Clique para selecionar ou arraste o arquivo CSV até aqui
           </h3>
           <p className="text-xs text-[#5C6B63] max-w-md mx-auto mb-5">
-            Suporta arquivos .csv com separador por vírgula (,) ou ponto-e-vírgula (;) codificados em UTF-8.
+            Suporta arquivos .csv com separador por vírgula (,) ou ponto-e-vírgula (;) codificados
+            em UTF-8.
           </p>
 
           <Button
@@ -726,9 +693,7 @@ export function HospitalImportCsv({
         <Alert variant="destructive" className="bg-red-50 border-red-200 text-red-900">
           <AlertTriangle className="h-4 w-4 text-red-600" />
           <AlertTitle className="font-bold text-sm">Problema ao ler o CSV</AlertTitle>
-          <AlertDescription className="text-xs leading-relaxed mt-1">
-            {fileError}
-          </AlertDescription>
+          <AlertDescription className="text-xs leading-relaxed mt-1">{fileError}</AlertDescription>
           <div className="mt-3">
             <Button
               size="sm"
@@ -819,9 +784,9 @@ export function HospitalImportCsv({
             <div className="mt-4 pt-3 border-t border-[#DDE5DF] flex items-center gap-2 text-xs text-[#5C6B63]">
               <Info className="w-4 h-4 text-[#0B6E4F] shrink-0" />
               <span>
-                <strong>Atenção:</strong> Nada foi salvo ainda. Revise a tabela de
-                pré-visualização abaixo e clique em <strong>"Confirmar importação"</strong> para
-                gravar as alterações no banco de dados.
+                <strong>Atenção:</strong> Nada foi salvo ainda. Revise a tabela de pré-visualização
+                abaixo e clique em <strong>"Confirmar importação"</strong> para gravar as alterações
+                no banco de dados.
               </span>
             </div>
           </div>
@@ -873,8 +838,8 @@ export function HospitalImportCsv({
                             isInvalid
                               ? 'bg-red-50/70 hover:bg-red-50'
                               : isUpdate
-                              ? 'bg-blue-50/40 hover:bg-blue-50/70'
-                              : 'hover:bg-[#F4F7F4]/60'
+                                ? 'bg-blue-50/40 hover:bg-blue-50/70'
+                                : 'hover:bg-[#F4F7F4]/60'
                           }
                         `}
                       >
@@ -903,8 +868,8 @@ export function HospitalImportCsv({
                                 </TooltipTrigger>
                                 <TooltipContent className="text-xs bg-[#14201A] text-white max-w-xs">
                                   CNES já cadastrado para: &ldquo;
-                                  {row.existingHospitalName}&rdquo;. Os dados do cadastro
-                                  serão sobrescritos com as informações desta linha.
+                                  {row.existingHospitalName}&rdquo;. Os dados do cadastro serão
+                                  sobrescritos com as informações desta linha.
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
@@ -936,23 +901,17 @@ export function HospitalImportCsv({
 
                         {/* Nome */}
                         <TableCell className="font-semibold text-[#14201A]">
-                          {row.nome || (
-                            <span className="text-red-500 italic">Vazio</span>
-                          )}
+                          {row.nome || <span className="text-red-500 italic">Vazio</span>}
                         </TableCell>
 
                         {/* Município */}
                         <TableCell className="text-[#3A4B43]">
-                          {row.municipio || (
-                            <span className="text-red-500 italic">Vazio</span>
-                          )}
+                          {row.municipio || <span className="text-red-500 italic">Vazio</span>}
                         </TableCell>
 
                         {/* CNES */}
                         <TableCell className="font-mono text-[#14201A]">
-                          {row.cnes || (
-                            <span className="text-red-500 italic">Vazio</span>
-                          )}
+                          {row.cnes || <span className="text-red-500 italic">Vazio</span>}
                         </TableCell>
 
                         {/* CNPJ */}
@@ -962,9 +921,7 @@ export function HospitalImportCsv({
 
                         {/* CNPJ Mantenedora */}
                         <TableCell className="font-mono text-[#5C6B63]">
-                          {row.cnpj_mantenedora
-                            ? formatCNPJ(row.cnpj_mantenedora)
-                            : '—'}
+                          {row.cnpj_mantenedora ? formatCNPJ(row.cnpj_mantenedora) : '—'}
                         </TableCell>
 
                         {/* Tipo */}

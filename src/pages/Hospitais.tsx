@@ -18,11 +18,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { HospitalCard } from '@/components/HospitalCard'
 import { HospitalFormDialog } from '@/components/HospitalFormDialog'
 import { HospitalDetailSheet } from '@/components/HospitalDetailSheet'
+import { HospitalImportCsv } from '@/components/HospitalImportCsv'
 import { hospitaisService, Hospital, HospitalFormData } from '@/services/hospitais'
 import { useToast } from '@/hooks/use-toast'
+import { FileSpreadsheet, ListFilter } from 'lucide-react'
 
 export default function Hospitais() {
   const { toast } = useToast()
@@ -39,6 +42,7 @@ export default function Hospitais() {
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null)
   const [isDetailOpen, setIsDetailOpen] = useState(false)
+  const [activeSubTab, setActiveSubTab] = useState<'listagem' | 'importar'>('listagem')
 
   useEffect(() => {
     document.title = 'Hospitais · Fiscalização'
@@ -175,188 +179,247 @@ export default function Hospitais() {
   return (
     <div className="animate-page-enter">
       {/* Top Header Row with Title and "+ Novo hospital" Button */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-7">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-[22px] sm:text-[28px] font-bold text-[#14201A] tracking-[-0.2px] leading-tight">
             Hospitais
           </h1>
           <p className="text-sm text-[#5C6B63] mt-0.5">
-            Gerenciamento e cadastro das unidades hospitalares fiscalizadas
+            Gerenciamento, importação em lote e cadastro das unidades hospitalares fiscalizadas
           </p>
         </div>
 
-        <Button
-          onClick={() => setIsCreateOpen(true)}
-          className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold h-10 px-4 self-start sm:self-auto cursor-pointer"
-        >
-          <Plus className="w-4 h-4 mr-1.5 stroke-[2.5]" />
-          Novo hospital
-        </Button>
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          {activeSubTab === 'listagem' && (
+            <Button
+              onClick={() => setIsCreateOpen(true)}
+              className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold h-10 px-4 cursor-pointer"
+            >
+              <Plus className="w-4 h-4 mr-1.5 stroke-[2.5]" />
+              Novo hospital
+            </Button>
+          )}
+        </div>
       </div>
 
-      {/* Loading state */}
-      {isLoading && (
-        <div className="flex flex-col items-center justify-center py-20 text-[#5C6B63]">
-          <RefreshCw className="w-8 h-8 animate-spin text-[#0B6E4F] mb-3" />
-          <p className="text-sm font-medium">Carregando hospitais cadastrados...</p>
-        </div>
-      )}
-
-      {/* Error State */}
-      {!isLoading && error && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center max-w-lg mx-auto my-8">
-          <AlertCircle className="w-10 h-10 text-red-500 mx-auto mb-3" />
-          <h3 className="font-bold text-[#14201A] mb-1">Erro ao carregar dados</h3>
-          <p className="text-sm text-[#5C6B63] mb-4">{error}</p>
-          <Button
-            variant="outline"
-            onClick={loadHospitais}
-            className="border-red-200 text-red-700 hover:bg-red-100"
-          >
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Tentar novamente
-          </Button>
-        </div>
-      )}
-
-      {/* When no hospitals exist at all (Original Empty State) */}
-      {isGlobalEmpty && (
-        <div className="mt-8 flex flex-col items-center justify-center text-center py-16 px-4 bg-white rounded-2xl border border-[#DDE5DF]/80 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
-          {/* Soft Green Circle Icon */}
-          <div
-            className="w-24 h-24 rounded-full bg-[#E6F4EE] flex items-center justify-center text-[#0B6E4F] mb-5 shadow-sm"
-            aria-hidden="true"
-          >
-            <Building2 className="w-10 h-10 stroke-[1.8]" />
-          </div>
-
-          {/* Empty State Message */}
-          <p className="text-[17px] font-semibold text-[#14201A] max-w-sm mb-1">
-            Nenhum hospital cadastrado ainda.
-          </p>
-          <p className="text-sm text-[#5C6B63] max-w-sm mb-6">
-            Comece cadastrando a primeira unidade hospitalar para iniciar o processo de
-            fiscalização.
-          </p>
-
-          <Button
-            onClick={() => setIsCreateOpen(true)}
-            className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold"
-          >
-            <Plus className="w-4 h-4 mr-1.5" />
-            Cadastrar primeiro hospital
-          </Button>
-        </div>
-      )}
-
-      {/* Content when hospitals exist */}
-      {!isLoading && !error && hospitais.length > 0 && (
-        <div className="space-y-6">
-          {/* Search and Filter Bar */}
-          <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#DDE5DF] shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
-            {/* Search Input */}
-            <div className="relative flex-1">
-              <Search className="w-4 h-4 text-[#5C6B63] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-              <Input
-                placeholder="Buscar por nome, município ou CNES..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-9 border-[#DDE5DF] focus-visible:ring-[#0B6E4F] bg-[#F4F7F4]/40 h-10 text-sm"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  aria-label="Limpar busca"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5C6B63] hover:text-[#14201A]"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-
-            {/* Municipio Selector */}
-            <div className="w-full sm:w-[240px]">
-              <Select value={selectedMunicipio} onValueChange={setSelectedMunicipio}>
-                <SelectTrigger className="border-[#DDE5DF] bg-[#F4F7F4]/40 focus:ring-[#0B6E4F] h-10 text-sm">
-                  <div className="flex items-center gap-2 truncate">
-                    <MapPin className="w-4 h-4 text-[#0B6E4F] shrink-0" />
-                    <SelectValue placeholder="Filtrar por município" />
-                  </div>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="todos">Todos os municípios</SelectItem>
-                  {municipios.map((mun) => (
-                    <SelectItem key={mun} value={mun}>
-                      {mun}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Clear filters button if active */}
-            {hasActiveFilters && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleClearFilters}
-                className="text-xs text-[#5C6B63] hover:text-[#0B6E4F] h-10 shrink-0 font-medium"
+      {/* Sub-tabs: Listagem (default) vs Importar CSV */}
+      <Tabs
+        value={activeSubTab}
+        onValueChange={(val) => setActiveSubTab(val as 'listagem' | 'importar')}
+        className="space-y-6"
+      >
+        <div className="border-b border-[#DDE5DF] pb-px">
+          <TabsList className="bg-[#E6F4EE]/60 p-1 rounded-lg border border-[#DDE5DF]/80 h-auto">
+            <TabsTrigger
+              value="listagem"
+              className="data-[state=active]:bg-[#0B6E4F] data-[state=active]:text-white text-[#5C6B63] font-semibold text-xs sm:text-sm py-2 px-4 rounded-md transition-all gap-2"
+            >
+              <ListFilter className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              Listagem de hospitais
+              <span
+                className={`ml-1 text-xs px-1.5 py-0.2 rounded-full font-bold ${
+                  activeSubTab === 'listagem'
+                    ? 'bg-white/20 text-white'
+                    : 'bg-[#DDE5DF] text-[#14201A]'
+                }`}
               >
-                <SlidersHorizontal className="w-3.5 h-3.5 mr-1" />
-                Limpar filtros
-              </Button>
-            )}
-          </div>
+                {hospitais.length}
+              </span>
+            </TabsTrigger>
 
-          {/* Results Counter */}
-          <div className="flex items-center justify-between text-xs text-[#5C6B63] px-1">
-            <span>
-              Mostrando <strong>{filteredHospitais.length}</strong> de{' '}
-              <strong>{hospitais.length}</strong>{' '}
-              {hospitais.length === 1 ? 'hospital' : 'hospitais'}
-            </span>
-            {hasActiveFilters && (
-              <span className="text-[#0B6E4F] font-medium">Filtro aplicado</span>
-            )}
-          </div>
+            <TabsTrigger
+              value="importar"
+              className="data-[state=active]:bg-[#0B6E4F] data-[state=active]:text-white text-[#5C6B63] font-semibold text-xs sm:text-sm py-2 px-4 rounded-md transition-all gap-2"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              Importar CSV
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
-          {/* No search results found */}
-          {filteredHospitais.length === 0 && (
-            <div className="bg-white rounded-xl border border-[#DDE5DF] p-10 text-center">
-              <Search className="w-10 h-10 text-[#8E9D94] mx-auto mb-3 stroke-[1.5]" />
-              <h3 className="text-base font-semibold text-[#14201A] mb-1">
-                Nenhum hospital encontrado
-              </h3>
-              <p className="text-sm text-[#5C6B63] max-w-md mx-auto mb-4">
-                Nenhum registro corresponde aos critérios de busca informados. Tente ajustar os
-                termos ou limpar os filtros.
-              </p>
+        {/* Tab 1: Listagem */}
+        <TabsContent value="listagem" className="m-0 space-y-6 outline-none">
+          {/* Loading state */}
+          {isLoading && (
+            <div className="flex flex-col items-center justify-center py-20 text-[#5C6B63]">
+              <RefreshCw className="w-8 h-8 animate-spin text-[#0B6E4F] mb-3" />
+              <p className="text-sm font-medium">Carregando hospitais cadastrados...</p>
+            </div>
+          )}
+
+          {/* Error State */}
+          {!isLoading && error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center max-w-lg mx-auto my-8">
+              <AlertCircle className="w-10 h-10 text-red-500 mx-auto mb-3" />
+              <h3 className="font-bold text-[#14201A] mb-1">Erro ao carregar dados</h3>
+              <p className="text-sm text-[#5C6B63] mb-4">{error}</p>
               <Button
                 variant="outline"
-                size="sm"
-                onClick={handleClearFilters}
-                className="border-[#DDE5DF] text-[#0B6E4F] hover:bg-[#E6F4EE]"
+                onClick={loadHospitais}
+                className="border-red-200 text-red-700 hover:bg-red-100"
               >
-                Limpar busca e filtros
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Tentar novamente
               </Button>
             </div>
           )}
 
-          {/* Grid of Hospital Cards */}
-          {filteredHospitais.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-              {filteredHospitais.map((hospital) => (
-                <HospitalCard
-                  key={hospital.id}
-                  hospital={hospital}
-                  onClick={() => handleOpenDetail(hospital)}
-                />
-              ))}
+          {/* When no hospitals exist at all */}
+          {isGlobalEmpty && (
+            <div className="mt-4 flex flex-col items-center justify-center text-center py-16 px-4 bg-white rounded-2xl border border-[#DDE5DF]/80 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+              {/* Soft Green Circle Icon */}
+              <div
+                className="w-24 h-24 rounded-full bg-[#E6F4EE] flex items-center justify-center text-[#0B6E4F] mb-5 shadow-sm"
+                aria-hidden="true"
+              >
+                <Building2 className="w-10 h-10 stroke-[1.8]" />
+              </div>
+
+              {/* Empty State Message */}
+              <p className="text-[17px] font-semibold text-[#14201A] max-w-sm mb-1">
+                Nenhum hospital cadastrado ainda.
+              </p>
+              <p className="text-sm text-[#5C6B63] max-w-sm mb-6">
+                Comece cadastrando a primeira unidade hospitalar ou faça uma importação em lote por
+                CSV.
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <Button
+                  onClick={() => setIsCreateOpen(true)}
+                  className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold"
+                >
+                  <Plus className="w-4 h-4 mr-1.5" />
+                  Cadastrar primeiro hospital
+                </Button>
+
+                <Button
+                  variant="outline"
+                  onClick={() => setActiveSubTab('importar')}
+                  className="border-[#0B6E4F]/40 text-[#0B6E4F] hover:bg-[#E6F4EE] font-semibold"
+                >
+                  <FileSpreadsheet className="w-4 h-4 mr-1.5" />
+                  Importar via CSV
+                </Button>
+              </div>
             </div>
           )}
-        </div>
-      )}
+
+          {/* Content when hospitals exist */}
+          {!isLoading && !error && hospitais.length > 0 && (
+            <div className="space-y-6">
+              {/* Search and Filter Bar */}
+              <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#DDE5DF] shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                {/* Search Input */}
+                <div className="relative flex-1">
+                  <Search className="w-4 h-4 text-[#5C6B63] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <Input
+                    placeholder="Buscar por nome, município ou CNES..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 pr-9 border-[#DDE5DF] focus-visible:ring-[#0B6E4F] bg-[#F4F7F4]/40 h-10 text-sm"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      aria-label="Limpar busca"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5C6B63] hover:text-[#14201A]"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Municipio Selector */}
+                <div className="w-full sm:w-[240px]">
+                  <Select value={selectedMunicipio} onValueChange={setSelectedMunicipio}>
+                    <SelectTrigger className="border-[#DDE5DF] bg-[#F4F7F4]/40 focus:ring-[#0B6E4F] h-10 text-sm">
+                      <div className="flex items-center gap-2 truncate">
+                        <MapPin className="w-4 h-4 text-[#0B6E4F] shrink-0" />
+                        <SelectValue placeholder="Filtrar por município" />
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="todos">Todos os municípios</SelectItem>
+                      {municipios.map((mun) => (
+                        <SelectItem key={mun} value={mun}>
+                          {mun}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Clear filters button if active */}
+                {hasActiveFilters && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleClearFilters}
+                    className="text-xs text-[#5C6B63] hover:text-[#0B6E4F] h-10 shrink-0 font-medium"
+                  >
+                    <SlidersHorizontal className="w-3.5 h-3.5 mr-1" />
+                    Limpar filtros
+                  </Button>
+                )}
+              </div>
+
+              {/* Results Counter */}
+              <div className="flex items-center justify-between text-xs text-[#5C6B63] px-1">
+                <span>
+                  Mostrando <strong>{filteredHospitais.length}</strong> de{' '}
+                  <strong>{hospitais.length}</strong>{' '}
+                  {hospitais.length === 1 ? 'hospital' : 'hospitais'}
+                </span>
+                {hasActiveFilters && (
+                  <span className="text-[#0B6E4F] font-medium">Filtro aplicado</span>
+                )}
+              </div>
+
+              {/* No search results found */}
+              {filteredHospitais.length === 0 && (
+                <div className="bg-white rounded-xl border border-[#DDE5DF] p-10 text-center">
+                  <Search className="w-10 h-10 text-[#8E9D94] mx-auto mb-3 stroke-[1.5]" />
+                  <h3 className="text-base font-semibold text-[#14201A] mb-1">
+                    Nenhum hospital encontrado
+                  </h3>
+                  <p className="text-sm text-[#5C6B63] max-w-md mx-auto mb-4">
+                    Nenhum registro corresponde aos critérios de busca informados. Tente ajustar os
+                    termos ou limpar os filtros.
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleClearFilters}
+                    className="border-[#DDE5DF] text-[#0B6E4F] hover:bg-[#E6F4EE]"
+                  >
+                    Limpar busca e filtros
+                  </Button>
+                </div>
+              )}
+
+              {/* Grid of Hospital Cards */}
+              {filteredHospitais.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                  {filteredHospitais.map((hospital) => (
+                    <HospitalCard
+                      key={hospital.id}
+                      hospital={hospital}
+                      onClick={() => handleOpenDetail(hospital)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </TabsContent>
+
+        {/* Tab 2: Importar CSV */}
+        <TabsContent value="importar" className="m-0 outline-none">
+          <HospitalImportCsv existingHospitais={hospitais} onImportComplete={loadHospitais} />
+        </TabsContent>
+      </Tabs>
 
       {/* Form Dialog: Create Hospital */}
       <HospitalFormDialog
