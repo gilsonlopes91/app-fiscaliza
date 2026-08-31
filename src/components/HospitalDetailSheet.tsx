@@ -19,6 +19,7 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
+import { useNavigate } from 'react-router-dom'
 import {
   Building2,
   MapPin,
@@ -32,8 +33,11 @@ import {
   Hash,
   CreditCard,
   Building,
+  ClipboardCheck,
 } from 'lucide-react'
 import { Hospital, HospitalFormData, HospitalTipo } from '@/services/hospitais'
+import { vistoriasService } from '@/services/vistorias'
+import { useToast } from '@/hooks/use-toast'
 import { formatCNPJ, formatCPF, formatCNES } from '@/lib/formatters'
 import {
   AlertDialog,
@@ -63,9 +67,12 @@ export function HospitalDetailSheet({
   onUpdate,
   onDelete,
 }: HospitalDetailSheetProps) {
+  const navigate = useNavigate()
+  const { toast } = useToast()
   const [isEditing, setIsEditing] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isStartingVistoria, setIsStartingVistoria] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
   const [formData, setFormData] = useState<HospitalFormData>({
@@ -172,6 +179,29 @@ export function HospitalDetailSheet({
     setIsEditing(false)
   }
 
+  const handleIniciarVistoria = async () => {
+    if (!hospital) return
+    try {
+      setIsStartingVistoria(true)
+      const vistoria = await vistoriasService.getOrCreateForHospital(hospital.id)
+      onOpenChange(false)
+      toast({
+        title: 'Vistoria carregada',
+        description: `Vistoria vinculada a "${hospital.nome}".`,
+      })
+      navigate(`/vistoria?hospitalId=${hospital.id}&vistoriaId=${vistoria.id}`)
+    } catch (err) {
+      console.error('Erro ao iniciar vistoria:', err)
+      toast({
+        title: 'Erro ao iniciar vistoria',
+        description: 'Não foi possível carregar ou criar a vistoria para este hospital.',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsStartingVistoria(false)
+    }
+  }
+
   const handleDelete = async () => {
     if (!onDelete) return
     try {
@@ -218,16 +248,32 @@ export function HospitalDetailSheet({
               </div>
 
               {!isEditing && (
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  onClick={() => setIsEditing(true)}
-                  className="shrink-0 border-[#DDE5DF] text-[#0B6E4F] hover:text-[#0B6E4F] hover:bg-[#E6F4EE] font-semibold"
-                >
-                  <Edit2 className="w-4 h-4 mr-1.5" />
-                  Editar
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    type="button"
+                    size="sm"
+                    onClick={handleIniciarVistoria}
+                    disabled={isStartingVistoria}
+                    className="shrink-0 bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold h-9 px-3"
+                  >
+                    {isStartingVistoria ? (
+                      <Loader2 className="w-4 h-4 animate-spin mr-1.5" />
+                    ) : (
+                      <ClipboardCheck className="w-4 h-4 mr-1.5 stroke-[2.2]" />
+                    )}
+                    Iniciar vistoria
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setIsEditing(true)}
+                    className="shrink-0 border-[#DDE5DF] text-[#0B6E4F] hover:text-[#0B6E4F] hover:bg-[#E6F4EE] font-semibold h-9 px-3"
+                  >
+                    <Edit2 className="w-4 h-4 mr-1.5" />
+                    Editar
+                  </Button>
+                </div>
               )}
             </div>
           </SheetHeader>
@@ -612,24 +658,51 @@ export function HospitalDetailSheet({
                 </div>
               </div>
 
-              {/* Section 4: Ações / Exclusão */}
-              {onDelete && (
-                <div className="pt-2 flex justify-between items-center">
-                  <span className="text-xs text-[#5C6B63]">
-                    Cadastrado em {new Date(hospital.created).toLocaleDateString('pt-BR')}
-                  </span>
+              {/* Section 4: Ações Rápidas de Vistoria e Exclusão */}
+              <div className="pt-2 flex flex-col gap-3">
+                <div className="bg-[#E6F4EE]/60 border border-[#0B6E4F]/20 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div className="space-y-0.5">
+                    <p className="text-sm font-bold text-[#14201A] flex items-center gap-1.5">
+                      <ClipboardCheck className="w-4 h-4 text-[#0B6E4F]" />
+                      Checklist Técnico de Vistoria
+                    </p>
+                    <p className="text-xs text-[#5C6B63]">
+                      Preencha ou visualize a conformidade de engenharia e segurança deste hospital.
+                    </p>
+                  </div>
                   <Button
                     type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowDeleteConfirm(true)}
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50 text-xs font-medium"
+                    onClick={handleIniciarVistoria}
+                    disabled={isStartingVistoria}
+                    className="bg-[#0B6E4F] hover:bg-[#095A41] text-white shadow-sm font-semibold shrink-0 text-xs h-9 px-3.5"
                   >
-                    <Trash2 className="w-3.5 h-3.5 mr-1" />
-                    Excluir hospital
+                    {isStartingVistoria ? (
+                      <Loader2 className="w-4 h-4 animate-spin mr-1.5" />
+                    ) : (
+                      <ClipboardCheck className="w-4 h-4 mr-1.5" />
+                    )}
+                    Iniciar vistoria
                   </Button>
                 </div>
-              )}
+
+                {onDelete && (
+                  <div className="pt-2 flex justify-between items-center">
+                    <span className="text-xs text-[#5C6B63]">
+                      Cadastrado em {new Date(hospital.created).toLocaleDateString('pt-BR')}
+                    </span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowDeleteConfirm(true)}
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50 text-xs font-medium"
+                    >
+                      <Trash2 className="w-3.5 h-3.5 mr-1" />
+                      Excluir hospital
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </SheetContent>

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T18:38:20.572Z",
+  "generatedAt": "2026-08-31T18:42:50.863Z",
   "collections": [
     {
       "name": "users",
@@ -176,6 +176,145 @@
         }
       ],
       "indexes": ["CREATE UNIQUE INDEX idx_categorias_vistoria_nome ON categorias_vistoria (nome)"]
+    },
+    {
+      "name": "vistorias",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+      },
+      "fields": [
+        {
+          "name": "hospital",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "hospitais"
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["em_andamento", "concluida"]
+        },
+        {
+          "name": "observacoes",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": ["CREATE INDEX idx_vistorias_hospital ON vistorias (hospital)"]
+    },
+    {
+      "name": "vistoria_itens",
+      "type": "base",
+      "apiRules": {
+        "list": "",
+        "view": "",
+        "create": "",
+        "update": "",
+        "delete": ""
+      },
+      "fields": [
+        {
+          "name": "vistoria",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "vistorias"
+        },
+        {
+          "name": "hospital",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "hospitais"
+        },
+        {
+          "name": "categoria",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "categorias_vistoria"
+        },
+        {
+          "name": "possuiSistema",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["Sim", "Não"]
+        },
+        {
+          "name": "prestadorServico",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "numeroArt",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "comprovanteEntregue",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["Sim", "Não"]
+        },
+        {
+          "name": "dataUltimaVerificacao",
+          "type": "date",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "situacaoCalculada",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_vistoria_itens_vistoria ON vistoria_itens (vistoria)",
+        "CREATE INDEX idx_vistoria_itens_hospital ON vistoria_itens (hospital)",
+        "CREATE INDEX idx_vistoria_itens_categoria ON vistoria_itens (categoria)"
+      ]
     }
   ]
 }
